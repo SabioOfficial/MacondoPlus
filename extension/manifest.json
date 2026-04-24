@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Macondo+",
+  "version": "1.0.0",
+  "description": "A QoL-focused browser extension for Macondo.",
+  "icons": {
+    "16": "images/icon-16.png",
+    "24": "images/icon-24.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/content-script.js",
+        "scripts/modules/hide-feedback.js"
+      ],
+      "matches": [
+        "https://macondo.hackclub.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
