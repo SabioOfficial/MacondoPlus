@@ -15,7 +15,8 @@
       "js": [
         "scripts/content-script.js",
         "scripts/modules/hide-feedback.js",
-        "scripts/modules/prevent-decimal-hours.js"
+        "scripts/modules/prevent-decimal-hours.js",
+        "scripts/modules/open-in-new-tab-shortcut.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
