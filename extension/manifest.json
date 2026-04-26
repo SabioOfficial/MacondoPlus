@@ -17,12 +17,14 @@
         "scripts/modules/hide-feedback.js",
         "scripts/modules/prevent-decimal-hours.js",
         "scripts/modules/open-in-new-tab-shortcut.js",
-        "scripts/modules/better-page-titles.js"
+        "scripts/modules/better-page-titles.js",
+        "scripts/modules/project-search.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
       ],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "permissions": ["storage"]
 }
