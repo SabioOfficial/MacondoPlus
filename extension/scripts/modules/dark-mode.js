@@ -1,9 +1,3 @@
-// const meow = document.createElement("style");
-// meow.textContent = `
-//   
-// `;
-// (document.head || document.documentElement).appendChild(meow);
-
 const DARK_MODE_KEY = "macondoplus_darkmode";
 const DARK_STYLE_ID = "macondoplus-dark-style";
 
