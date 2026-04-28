@@ -86,13 +86,15 @@ function injectDarkModeButton() {
     updateButton(btn, nowEnabled);
   });
 
-  toolbar.insertBefore(btn, toolbar.firstChild);
+  toolbar.insertBefore(btn, toolbar.querySelector(".macondoplus-manager-btn"));
 }
 
 applyDarkMode(isDarkMode());
 
-document.addEventListener("DOMContentLoaded", () => {
-  injectDarkModeButton();
-  const observer = new MutationObserver(injectDarkModeButton);
-  observer.observe(document.body, {childList: true, subtree: true});
-});
+if (window.MacondoPlus?.isEnabled('dark-mode')) {
+  document.addEventListener("DOMContentLoaded", () => {
+    injectDarkModeButton();
+    const observer = new MutationObserver(injectDarkModeButton);
+    observer.observe(document.body, {childList: true, subtree: true});
+  });
+}
