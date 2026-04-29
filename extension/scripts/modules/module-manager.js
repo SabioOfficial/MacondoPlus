@@ -21,7 +21,7 @@ function injectManagerButton() {
   panel.style.cssText = `
     display: none;
     position: fixed;
-    top: 60px;
+    top: 70px;
     right: 16px;
     width: 320px;
     z-index: 9999;
@@ -32,10 +32,17 @@ function injectManagerButton() {
 
   const {MODULES, isEnabled, setEnabled} = window.MacondoPlus;
 
+  const initialState = {};
+  MODULES.forEach(mod => {initialState[mod.id] = isEnabled(mod.id);});
+
   panel.innerHTML = `
     <div style="padding:14px 16px;border-bottom:2px solid rgba(92,61,30,0.2);display:flex;align-items:center;justify-content:space-between;">
       <span style="font-size:15px;font-weight:800;color:var(--color-ds-brown,#5c3d1e);">Macondo+ Modules</span>
-      <span style="font-size:11px;color:rgba(92,61,30,0.5);">Reload to apply changes</span>
+    </div>
+    <div class="macondoplus-reload-callout" style="display: none; margin: 10px 12px 0; padding: 10px 12px; background: #fee2e2; border: 2px solid #ef4444; border-radius: 6px;">
+      <div style="font-size: 12px; font-weight: 800; color: #b91c1c; margin-bottom: 2px;">Reload required!</div>
+      <div style="font-size: 11px; color: #b91c1c; margin-bottom: 8px;">Reload now to apply new modules.</div>
+      <button type="button" class="macondoplus-reload-btn" style="width: 100%; padding: 5px 0; background: #ef4444; border: none; border-radius: 4px; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer;">Reload</button>
     </div>
     <div style="max-height:420px;overflow-y:auto;">
       ${MODULES.map(mod => `
@@ -59,6 +66,16 @@ function injectManagerButton() {
     </div>
   `;
 
+  const callout = panel.querySelector(".macondoplus-reload-callout");
+  const reloadBtn = panel.querySelector(".macondoplus-reload-btn");
+
+  reloadBtn.addEventListener("click", () => location.reload());
+  
+  function checkForChanges() {
+    const hasChanges = MODULES.some(module => isEnabled(module.id) !== initialState[module.id]);
+    callout.style.display = hasChanges ? "block" : "none";
+  }
+
   panel.querySelectorAll(".macondoplus-toggle").forEach(toggleBtn => {
     toggleBtn.addEventListener("click", () => {
       const id = toggleBtn.dataset.moduleId;
@@ -70,6 +87,8 @@ function injectManagerButton() {
       const knob = toggleBtn.querySelector("span");
       knob.style.left = nowEnabled ? "16px" : "2px";
       knob.style.background = nowEnabled ? "var(--color-parchment, #f5e6c8)" : "var(--color-ds-brown, #5c3d1e)";
+
+      checkForChanges();
     });
   });
 
