@@ -46,7 +46,9 @@ function applyDarkMode(enabled) {
       div.bg-parchment.relative.overflow-hidden *,
       div.relative.flex-1.min-h-0.w-full.p-4.overflow-y-auto *,
       div.macondoplus-search-panel *,
-      div.macondoplus-search-panel {
+      div.macondoplus-search-panel,
+      div.min-h-screen.bg-parchment,
+      div.min-h-screen.bg-parchment *:not(svg, div.flex-1.min-w-0)  {
         background-color: rgb(104, 77, 58);
         color: #eacfb3e6;
         border-color: rgb(70, 46, 30);
