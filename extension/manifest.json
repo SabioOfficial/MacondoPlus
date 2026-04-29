@@ -18,7 +18,8 @@
         "scripts/modules/better-page-titles.js",
         "scripts/modules/project-search.js",
         "scripts/modules/dark-mode.js",
-        "scripts/modules/module-manager.js"
+        "scripts/modules/module-manager.js",
+        "scripts/modules/gold-estimator.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"

@@ -5,6 +5,7 @@
     {id: "dark-mode", name: "Dark Mode", description: "Adds dark mode to Macondo (WIP)", defaultEnabled: false},
     {id: "hide-feedback", name: "Hide Feedback", description: "Hides the annoying NPS (feedback) button", defaultEnabled: true},
     {id: "project-search", name: "Project Search", description: "Adds a way to search for projects", defaultEnabled: true},
+    {id: "gold-estimator", name: "Gold Estimator", description: "Shows estimated gold value of pending fruits on project pages.", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
