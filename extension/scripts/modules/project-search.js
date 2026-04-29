@@ -32,7 +32,7 @@ async function fetchProject(id) {
 
 let syncing = false;
 
-async function sync(onProgress, onDone) {
+async function sync(onProgress, onDone, fullSync = false) {
   if (syncing) return;
   syncing = true;
 
@@ -72,6 +72,26 @@ async function sync(onProgress, onDone) {
     if (id % 10 === 0) await setCache(cache);
   }
 
+  if (fullSync) {
+    const knownIds = Object.keys(cache.projects).map(Number);
+    onProgress(`[F.Sync] Re-checking ${knownIds.length} known projects... [0%]`);
+    for (let i = 0; i < knownIds.length; i += CONCURRENCY) {
+      const batch = knownIds.slice(i, i + CONCURRENCY);
+      const results = await Promise.all(batch.map(fetchProject));
+      results.forEach((project, index) => {
+        const batchId = batch[index];
+        if (project) {
+          cache.projects[batchId] = project.name;
+        } else {
+          delete cache.projects[batchId];
+        }
+      });
+      // this has to be the worst maths ive seen
+      onProgress(`[F.Sync] Re-checking ${knownIds.length} known projects... [${((Math.min(i + CONCURRENCY, knownIds.length) / knownIds.length) * 100).toFixed(2)}%]`);
+      await setCache(cache);
+    }
+  }
+
   await setCache(cache);
   syncing = false;
   onDone?.();
@@ -104,6 +124,10 @@ function createSearchUI() {
         <input type="text" placeholder="Search projects..." class="ds-input flex-1" style="font-size: 13px; min-width: 0;"/>
         <button type="button" class="macondoplus-sync-btn ds-input" style="font-size: 13px; font-weight: bold; white-space: nowrap; cursor: pointer; border-width: 3px;">Sync</button>
       </div>
+      <label style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--color-ds-brown,#5c3d1e);cursor:pointer;">
+        <input type="checkbox" class="macondoplus-full-sync-toggle" style="cursor:pointer;"/>
+        Full sync (may take a long time)
+      </label>
       <div class="macondoplus-sync-status" style="font-size: 11px; color: #999; display: none;"></div>
       <div class="macondoplus-results" style="height: 220px; overflow-y: auto; display: none; flex-direction: column; gap: 2px;"></div>
     </div>
@@ -116,6 +140,7 @@ function createSearchUI() {
   const syncBtn = panel.querySelector(".macondoplus-sync-btn");
   const statusEl = panel.querySelector(".macondoplus-sync-status");
   const resultsEl = panel.querySelector(".macondoplus-results");
+  const fullSyncToggle = panel.querySelector(".macondoplus-full-sync-toggle");
 
   function setStatus(msg) {
     if (msg) {
@@ -181,7 +206,7 @@ function createSearchUI() {
       syncBtn.disabled = false;
       syncBtn.textContent = "Sync";
       input.dispatchEvent(new Event("input"));
-    });
+    }, fullSyncToggle.checked);
   });
 }
 
