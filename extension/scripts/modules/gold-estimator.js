@@ -37,22 +37,21 @@ function injectGoldEstimate(pendingSpan) {
 
   pendingSpan.dataset.goldInjected = "true";
 
-  const goldEstimatedLabel = document.createElement("small");
+  const goldEstimatedLabel = document.createElement("span");
   goldEstimatedLabel.className = "macondoplus-gold-est-label";
   goldEstimatedLabel.style.cssText = `
     display: inline-flex;
     align-items: center;
     gap: 4px;
     margin-left: 6px;
-    padding: 1px 7px;
-    background: #fef9c3;
-    border: 2px solid #ca8a04;
-    color: #92400e;
-    font-size: 11px;
-    font-weight: 800;
+    padding: 0.5rem 0.75rem;
+    background: rgb(252 239 207/var(--tw-bg-opacity,1));
+    border: 3px solid #8f690a99;
+    color: rgb(95 70 7/var(--tw-text-opacity,1));
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
     white-space: nowrap;
-    vertical-align: middle;
-    border-radius: 4px;
     pointer-events: none;
   `;
   goldEstimatedLabel.textContent = `${totalGold} gold`;
