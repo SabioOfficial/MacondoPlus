@@ -20,7 +20,8 @@
         "scripts/modules/dark-mode.js",
         "scripts/modules/module-manager.js",
         "scripts/modules/gold-estimator.js",
-        "scripts/modules/keyboard-shortcuts.js"
+        "scripts/modules/keyboard-shortcuts.js",
+        "scripts/modules/middle-click-project.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
