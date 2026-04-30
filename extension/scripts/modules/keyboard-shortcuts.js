@@ -1,16 +1,23 @@
+let suppressEscapeRedispatch = false;
+
 document.addEventListener("keydown", (e) => {
   if (!window.MacondoPlus?.isEnabled("keyboard-shortcuts")) return;
   const tag = e.target.tagName;
   if (tag === "INPUT" || tag === "TEXTAREA" || e.target.isContentEditable) return;
   if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (suppressEscapeRedispatch && e.key === "Escape") return;
 
   switch (e.key) {
     case "Escape": {
-      const backBtn = [...document.querySelectorAll("button, a")].find(el => el.textContent.includes("Back to farm"));
+      const backBtn = [...document.querySelectorAll("button, a")].find(el =>
+        el.textContent.includes("Back to farm")
+      );
       if (backBtn) {
         backBtn.click();
       } else {
-        document.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
+        suppressEscapeRedispatch = true;
+        document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+        suppressEscapeRedispatch = false;
       }
       break;
     }
