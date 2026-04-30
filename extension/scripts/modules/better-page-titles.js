@@ -26,6 +26,8 @@ if (window.MacondoPlus?.isEnabled("better-page-titles")) {
       changePageTitle("Macondo | Dashboard");
     } else if (path === "/shop") {
       changePageTitle("Macondo | Shop");
+    } else if (path === "/profile") {
+      changePageTitle("Macondo | Profile");
     } else if (/^\/projects\/\d+$/.test(path)) {
       const projectTitle = document.querySelector("h1.text-xl");
       if (projectTitle) {
