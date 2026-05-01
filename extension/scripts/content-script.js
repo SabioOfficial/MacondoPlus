@@ -7,7 +7,8 @@
     {id: "project-search", name: "Project Search", description: "Adds a way to search for projects", defaultEnabled: true},
     {id: "gold-estimator", name: "Gold Estimator", description: "Shows estimated gold value of pending fruits on project pages.", defaultEnabled: true},
     {id: "keyboard-shortcuts", name: "Keyboard Shortcuts", description: "Adds keyboard shortcuts to Macondo. E for Shop, R for Profile, 1-9 for Projects, Esc to exit the current menu you're in, / to search for projects.", defaultEnabled: true},
-    {id: "middle-click-project", name: "Middle Click Project", description: "Middle clicking a project tile opens it on a new tab.", defaultEnabled: true}
+    {id: "middle-click-project", name: "Middle Click Project", description: "Middle clicking a project tile opens it on a new tab.", defaultEnabled: true},
+    {id: "hide-idea-generator", name: "Hide Idea Generator", description: "Hides the slop project idea generator.", defaultEnabled: true},
   ];
   
   function isEnabled(id) {

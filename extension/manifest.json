@@ -21,7 +21,8 @@
         "scripts/modules/module-manager.js",
         "scripts/modules/gold-estimator.js",
         "scripts/modules/keyboard-shortcuts.js",
-        "scripts/modules/middle-click-project.js"
+        "scripts/modules/middle-click-project.js",
+        "scripts/modules/hide-idea-generator.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
