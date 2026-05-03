@@ -28,8 +28,7 @@ function parseShopItems() {
 }
 
 function isShopVisible() {
-  const items = document.querySelectorAll("[data-flip-id]");
-  return items.length > 0;
+  return document.querySelector("[data-flip-id] button.ds-btn-primary") !== null && document.querySelector("[data-flip-id] button.ds-btn-primary")?.textContent.includes("Gold");
 }
 
 function buildWidget() {
