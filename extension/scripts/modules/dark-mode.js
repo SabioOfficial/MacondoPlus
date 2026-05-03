@@ -20,11 +20,13 @@ function applyDarkMode(enabled) {
       } 
       .game-world .palma,
       .donkey-area img,
-      .house-area img {
+      .house-area img,
+      .explore-area img {
         filter: brightness(0.6) !important; 
       }
       .donkey-area img:hover,
-      .house-area img:hover {
+      .house-area img:hover,
+      .explore-area img:hover {
         filter: brightness(0.8) !important;
       }
       .game-world .farm-area img,
@@ -48,10 +50,22 @@ function applyDarkMode(enabled) {
       div.macondoplus-search-panel *,
       div.macondoplus-search-panel,
       div.min-h-screen.bg-parchment,
-      div.min-h-screen.bg-parchment *:not(svg, div.flex-1.min-w-0)  {
+      div.min-h-screen.bg-parchment *:not(svg, div.flex-1.min-w-0, div.doc-callout)  {
         background-color: rgb(104, 77, 58);
         color: #eacfb3e6;
         border-color: rgb(70, 46, 30);
+        stroke: #eacfb3e6;
+      }
+      div.doc-callout {
+        background: rgb(70 46 30 / 0.12) !important;
+        border-left-color: #eacfb3e6 !important;
+      }
+      div.doc-callout * {
+        background: transparent !important;
+        color: #eacfb3e6 !important;
+      }
+      a.pick-path-card * {
+        background: transparent !important;
       }
       div.flex.items-center.gap-2.ml-auto * {
         color: inherit;
