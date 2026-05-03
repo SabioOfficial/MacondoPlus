@@ -35,6 +35,11 @@ if (window.MacondoPlus?.isEnabled("better-page-titles")) {
       if (projectTitle) {
         changePageTitle(`Macondo | ${projectTitle.textContent}`);
       }
+    } else if (/^\/u\/\S+/.test(path)) {
+      const username = document.querySelector("h1.text-2xl.font-bold.text-ds-brown");
+      if (username) {
+        changePageTitle(`Macondo | ${username.textContent}`);
+      }
     }
   }
 
