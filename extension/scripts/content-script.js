@@ -4,7 +4,6 @@
     {id: "better-page-titles", name: "Better Page Titles", description: "Makes the page titles useful", category: "QoL", defaultEnabled: true},
     {id: "dark-mode", name: "Dark Mode", description: "Adds dark mode to Macondo (WIP)", category: "Appearance", defaultEnabled: false},
     {id: "hide-feedback", name: "Hide Feedback", description: "Hides the annoying NPS (feedback) button", category: "QoL", defaultEnabled: true},
-    {id: "project-search", name: "Project Search", description: "Adds a way to search for projects", category: "Tools", defaultEnabled: true},
     {id: "gold-estimator", name: "Gold Estimator", description: "Shows estimated gold value of pending fruits on project pages.", category: "QoL", defaultEnabled: true},
     {id: "keyboard-shortcuts", name: "Keyboard Shortcuts", description: "Adds keyboard shortcuts to Macondo. E for Shop, R for Profile, 1-9 for Projects, Esc to exit the current menu you're in, / to search for projects.", category: "QoL", defaultEnabled: true},
     {id: "middle-click-project", name: "Middle Click Project", description: "Middle clicking a project tile opens it on a new tab.", category: "QoL", defaultEnabled: true},
