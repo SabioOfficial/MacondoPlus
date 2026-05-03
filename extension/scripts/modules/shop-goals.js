@@ -27,6 +27,11 @@ function parseShopItems() {
   return items;
 }
 
+function isShopVisible() {
+  const items = document.querySelectorAll("[data-flip-id]");
+  return items.length > 0;
+}
+
 function buildWidget() {
   const widget = document.createElement("div");
   widget.id = "macondoplus-goals-widget";
@@ -292,6 +297,9 @@ function scheduleRefresh(body, countSpan, globalSection) {
 }
 
 function doRefresh(body, countSpan, globalSection) {
+  const widget = document.getElementById("macondoplus-goals-widget");
+  if (widget) widget.style.display = isShopVisible() ? "" : "none";
+
   const items = parseShopItems();
   const currentGold = getCurrentGold();
 
