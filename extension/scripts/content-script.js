@@ -9,6 +9,7 @@
     {id: "keyboard-shortcuts", name: "Keyboard Shortcuts", description: "Adds keyboard shortcuts to Macondo. E for Shop, R for Profile, 1-9 for Projects, Esc to exit the current menu you're in, / to search for projects.", category: "QoL", defaultEnabled: true},
     {id: "middle-click-project", name: "Middle Click Project", description: "Middle clicking a project tile opens it on a new tab.", category: "QoL", defaultEnabled: true},
     {id: "hide-idea-generator", name: "Hide Idea Generator", description: "Hides the slop project idea generator.", category: "QoL", defaultEnabled: true},
+    {id: "shop-goals", name: "Shop Goals", description: "Hides the slop project idea generator.", category: "Tools", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
