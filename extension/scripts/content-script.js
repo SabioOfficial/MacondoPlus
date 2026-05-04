@@ -9,6 +9,7 @@
     {id: "middle-click-project", name: "Middle Click Project", description: "Middle clicking a project tile opens it on a new tab.", category: "QoL", defaultEnabled: true},
     {id: "hide-idea-generator", name: "Hide Idea Generator", description: "Hides the slop project idea generator.", category: "QoL", defaultEnabled: true},
     {id: "shop-goals", name: "Shop Goals", description: "Hides the slop project idea generator.", category: "Tools", defaultEnabled: true},
+    {id: "persistent-filters", name: "Persistent Filters", description: "Remembers your last used explore filters across sessions.", category: "QoL", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
