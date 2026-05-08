@@ -11,6 +11,7 @@
     {id: "shop-goals", name: "Shop Goals", description: "Adds shop goals to the Shop.", category: "Tools", defaultEnabled: true},
     {id: "persistent-filters", name: "Persistent Filters", description: "Remembers your last used explore filters across sessions.", category: "QoL", defaultEnabled: true},
     {id: "infinite-scroll", name: "Infinite Scroll", description: "Automatically loads more projects as you scroll down on the explore page.", category: "QoL", defaultEnabled: true},
+    {id: "streak-time-display", name: "Streak Time Display", description: "Display how much time is left until your streak is logged in for the day!", category: "QoL", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
