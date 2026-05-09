@@ -153,7 +153,7 @@
       `;
       el.innerHTML = `
         <span class="mp-sl" style="font-size: 11px; font-weight: 700; white-space: nowrap; opacity: 0.9;"></span>
-        <span style="width: 38px; height: 3px; border-radius: 2px; background: rgba(92, 61, 30, 0.15); overflow: hidden;">
+        <span style="width: 100%; height: 3px; border-radius: 2px; background: rgba(92, 61, 30, 0.15); overflow: hidden;">
           <span class="mp-sf" style="display: block; height: 100%; border-radius: 2px; transition: width .4s, background .4s"></span>
         </span>
       `;
