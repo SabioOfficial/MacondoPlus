@@ -10,7 +10,7 @@
   function formatTime(mins) {
     if (mins >= 60) {
       const h = Math.floor(mins / 60), m = mins % 60;
-      return m ? `${h}m ${m}m` : `${h}h`;
+      return m ? `${h}h ${m}m` : `${h}h`;
     }
     return `${mins}m`;
   }
@@ -18,13 +18,13 @@
   function readCache() {
     try {
       const v = JSON.parse(localStorage.getItem("macondoplus_today_mins"));
-      if (v && v.date === todayISO()) return v.mins;
+      if (v && v.ts && (Date.now() - v.ts) < 60_000) return v.mins;
     } catch (_) {}
     return null;
   }
 
-  function writeCache() {
-    localStorage.setItem("macondoplus_today_mins", JSON.stringify({date: todayISO(), mins}));
+  function writeCache(mins) {
+    localStorage.setItem("macondoplus_today_mins", JSON.stringify({ts: Date.now(), mins}));
   }
 
   function fetchMins() {
@@ -61,7 +61,7 @@
         if (settled) return;
         try {
           const doc = iframe.contentDocument;
-          if (!doc || !doc.body) {setTimeout(scanForTodayCell, 60_000); return;}
+          if (!doc || !doc.body) {setTimeout(scanForTodayCell, 500); return;}
 
           const allTitled = doc.querySelectorAll("[title]");
           for (const el of allTitled) {
@@ -77,14 +77,14 @@
             }
           }
 
-          setTimeout(scanForTodayCell, 60_000);
+          setTimeout(scanForTodayCell, 500);
         } catch (e) {
           clearTimeout(timeoutId);
           done(null);
         }
       }
 
-      function clickCalendarToggle() {
+      function clickCalendarToggle(doc) {
         const buttons = doc.querySelectorAll("button");
         for (const btn of buttons) {
           if (btn.textContent.trim().toLowerCase().includes("streak calendar")) {
@@ -105,7 +105,7 @@
               return;
             }
             clickCalendarToggle(doc);
-            setTimeout(scanForTodayCell, 60_000);
+            setTimeout(scanForTodayCell, 500);
           } catch (e) {
             done(null);
           }
@@ -116,10 +116,9 @@
     });
   }
 
-  async function fetchMins() {
+  async function getMins() {
     try {
-      const mins = await fetchMins();
-      return mins;
+      return await fetchMins();
     } catch (err) {
       return null;
     }
@@ -135,7 +134,7 @@
     const pct = Math.min(100, Math.round((mins / 60) * 100));
     const label = `${formatTime(mins)}/1hr`;
     const done = mins >= 60;
-    const fg = done ? "#22c55e" : "#f97316";
+    const fg = done ? "rgb(234 88 12)" : "rgb(104 77 58)";
 
     let el = btn.querySelector(".mp-streak-time");
     if (!el) {
@@ -173,7 +172,7 @@
   }
 
   async function refresh() {
-    const mins = await fetchMins();
+    const mins = await getMins();
     if (mins !== null) {
       writeCache(mins);
       const btn = findStreakButton();
@@ -185,8 +184,8 @@
 
   function onMutation() {
     const btn = findStreakButton();
-    if (!btn || btn.querySelector(".mp-streak-time")) return;
-    paintFromCache();
+    if (!btn) return;
+    if (!btn.querySelector(".mp-streak-time")) paintFromCache();
   }
 
   function init() {
@@ -194,7 +193,12 @@
     refresh();
     setInterval(refresh, 60_000);
     const observer = new MutationObserver(onMutation);
-    observer.observe(document.body, {childList: true, subtree: true});
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["title", "aria-label"],
+    });
   }
 
   if (document.body) init();
