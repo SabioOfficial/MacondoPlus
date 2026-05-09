@@ -12,6 +12,7 @@
     {id: "persistent-filters", name: "Persistent Filters", description: "Remembers your last used explore filters across sessions.", category: "QoL", defaultEnabled: true},
     {id: "infinite-scroll", name: "Infinite Scroll", description: "Automatically loads more projects as you scroll down on the explore page.", category: "QoL", defaultEnabled: true},
     {id: "streak-time-display", name: "Streak Time Display", description: "Display how much time is left until your streak is logged in for the day!", category: "QoL", defaultEnabled: true},
+    {id: "styling-fixes", name: "Styling Fixes", description: "Fixes minor styling issues for Macondo that pisses you off.", category: "Appearance", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
