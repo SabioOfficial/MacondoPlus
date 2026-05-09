@@ -7,7 +7,35 @@ function getCurrentGold() {
   return 0;
 }
 
+function getQuantities() {
+  try {
+    return JSON.parse(localStorage.getItem("macondoplus_shop_quantities")) || {};
+  } catch {
+    return {};
+  }
+}
+
+function setQuantity(id, qty) {
+  const q = getQuantities();
+  if (qty <= 1) delete q[id]; else q[id] = qty;
+  localStorage.setItem("macondoplus_shop_quantities", JSON.stringify(q));
+}
+
+function getOrder() {
+  try {
+    return JSON.parse(localStorage.getItem("macondoplus_shop_order")) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveOrder(ids) {
+  localStorage.setItem("macondoplus_shop_order", JSON.stringify(ids));
+}
+
 function parseShopItems() {
+  const savedOrder = getOrder();
+  const quantities = getQuantities();
   const items = [];
 
   document.querySelectorAll("[data-flip-id]").forEach(el => {
@@ -24,6 +52,18 @@ function parseShopItems() {
     items.push({id: el.dataset.flipId, name, img, gold, hours});
   });
 
+  items.forEach(item => {item.qty = quantities[item.id] || 1;});
+
+  if (savedOrder.length) {
+    items.sort((a, b) => {
+      const ai = savedOrder.indexOf(a.id), bi = savedOrder.indexOf(b.id);
+      if (ai === -1 && bi === -1) return 0;
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  }
+
   return items;
 }
 
@@ -38,7 +78,7 @@ function buildWidget() {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    width: 280px;
+    width: 300px;
     z-index: 10000;
     background: var(--color-parchment, #f5e6c8);
     border: 3px solid var(--color-ds-brown, #5c3d1e);
@@ -164,7 +204,7 @@ function makeBar(pct, done) {
   return wrap;
 }
 
-function renderItem(item, currentGold, mode) {
+function renderItem(item, currentGold, mode, index, total, onMove, onQtyChange) {
   const row = document.createElement("div");
   row.style.cssText = `
     display: flex;
@@ -173,6 +213,38 @@ function renderItem(item, currentGold, mode) {
     padding: 9px 12px;
     border-bottom: 1px solid rgba(92, 61, 30, 0.1);
   `;
+
+  const reorderCol = document.createElement("div");
+  reorderCol.style.cssText = `
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex-shrink: 0;
+  `;
+  const makeArrow = (label, dir) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = label;
+    btn.disabled = dir === -1 ? index === 0 : index === total - 1;
+    btn.style.cssText = `
+      font-size: 9px;
+      line-height: 1;
+      padding: 1px 3px;
+      cursor: pointer;
+      border: 1px solid rgba(92, 61, 30, 0.2);
+      background: transparent;
+      color: #5c3d1e;
+      opacity: ${btn.disabled ? 0.3 : 1};
+    `;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      onMove(item.id, dir);
+    });
+    return btn;
+  };
+  reorderCol.appendChild(makeArrow("▲", -1));
+  reorderCol.appendChild(makeArrow("▼", 1));
+  row.appendChild(reorderCol);
 
   const thumb = document.createElement("img");
   thumb.src = item.img;
@@ -205,8 +277,9 @@ function renderItem(item, currentGold, mode) {
     text-overflow: ellipsis;
   `;
 
-  const pct = item.gold > 0 ? (currentGold / item.gold) * 100 : 100;
-  const done = currentGold >= item.gold;
+  const effectiveCost = item.gold * item.qty;
+  const pct = effectiveCost > 0 ? (currentGold / effectiveCost) * 100 : 100;
+  const done = currentGold >= effectiveCost;
   const bar = makeBar(pct, done);
 
   const metaEl = document.createElement("div");
@@ -219,22 +292,83 @@ function renderItem(item, currentGold, mode) {
 
   const leftMeta = document.createElement("span");
   leftMeta.style.cssText = `
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
     font-size: 10px;
     font-weight: 600;
     color: rgba(92, 61, 30, 0.6);
   `;
-
   if (done) {
     leftMeta.textContent = "✓ Affordable!";
     leftMeta.style.color = "#16a34a";
   } else if (mode === "cumulative") {
-    leftMeta.textContent = `Need ${item.gold - currentGold} more gold`;
+    leftMeta.innerHTML = `
+      <img src="/images/icons/money.webp" style="width: 10px; height: 10px; object-fit: contain;"/>
+      ${effectiveCost - currentGold} more
+    `;
   } else {
     leftMeta.textContent = `${item.hours}`;
   }
 
-  const rightMeta = document.createElement("span");
+  const rightMeta = document.createElement("div");
   rightMeta.style.cssText = `
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  `;
+
+  const qtyRow = document.createElement("div");
+  qtyRow.style.cssText = `
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  `;
+
+  const makeQtyBtn = (label, delta) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = label;
+    btn.style.cssText = `
+      font-size: 10px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(92, 61, 30, 0.3);
+      background: transparent;
+      cursor: pointer;
+      color: #5c3d1e;
+    `;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const newQty = Math.max(1, item.qty + delta);
+      onQtyChange(item.id, newQty);
+    });
+    return btn;
+  };
+
+  const qtyDisplay = document.createElement("span");
+  qtyDisplay.textContent = item.qty;
+  qtyDisplay.style.cssText = `
+    font-size: 11px;
+    font-weight: 700;
+    color: #5c3d1e;
+    min-width: 14px;
+    text-align: center;
+  `;
+
+  qtyRow.appendChild(makeQtyBtn("-", -1));
+  qtyRow.appendChild(qtyDisplay);
+  qtyRow.appendChild(makeQtyBtn("+", 1));
+
+  const goldDisplay = document.createElement("span");
+  goldDisplay.style.cssText = `
     display: flex;
     align-items: center;
     gap: 3px;
@@ -253,10 +387,13 @@ function renderItem(item, currentGold, mode) {
   `;
 
   const goldText = document.createElement("span");
-  goldText.textContent = item.gold;
+  goldText.textContent = item.qty > 1 ? `${effectiveCost}` : item.gold;
 
-  rightMeta.appendChild(goldIcon);
-  rightMeta.appendChild(goldText);
+  goldDisplay.appendChild(goldIcon);
+  goldDisplay.appendChild(goldText);
+
+  rightMeta.appendChild(qtyRow);
+  rightMeta.appendChild(goldDisplay);
 
   metaEl.appendChild(leftMeta);
   metaEl.appendChild(rightMeta);
@@ -311,11 +448,11 @@ function doRefresh(body, countSpan, globalSection) {
   if (items.length) {
     let pct, label;
     if (_mode === "cumulative") {
-      const total = items.reduce((s, i) => s + i.gold, 0);
+      const total = items.reduce((s, i) => s + i.gold * i.qty, 0);
       pct = total > 0 ? Math.min((currentGold / total) * 100, 100) : 100;
       label = `${currentGold} / ${total} gold total`;
     } else {
-      const avg = items.reduce((s, i) => s + Math.min((currentGold / (i.gold || 1)) * 100, 100), 0) / items.length;
+      const avg = items.reduce((s, i) => s + Math.min((currentGold / ((i.gold * i.qty) || 1)) * 100, 100), 0) / items.length;
       pct = avg;
       const affordable = items.filter(i => currentGold >= i.gold).length;
       label = `${affordable} / ${items.length} affordable`;
@@ -335,7 +472,22 @@ function doRefresh(body, countSpan, globalSection) {
     renderEmpty(body);
     return;
   }
-  items.forEach(item => body.appendChild(renderItem(item, currentGold, _mode)));
+  items.forEach((item, i) => body.appendChild(renderItem(
+    item, currentGold, _mode, i, items.length,
+    (id, dir) => {
+      const ids = items.map(x => x.id);
+      const idx = ids.indexOf(id);
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= ids.length) return;
+      [ids[idx], ids[newIdx]] = [ids[newIdx], ids[idx]];
+      saveOrder(ids);
+      doRefresh(body, countSpan, globalSection);
+    },
+    (id, qty) => {
+      setQuantity(id, qty);
+      doRefresh(body, countSpan, globalSection);
+    }
+  )));
 }
 
 function initShopGoals() {
