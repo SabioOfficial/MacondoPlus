@@ -472,22 +472,29 @@ function doRefresh(body, countSpan, globalSection) {
     renderEmpty(body);
     return;
   }
-  items.forEach((item, i) => body.appendChild(renderItem(
-    item, currentGold, _mode, i, items.length,
-    (id, dir) => {
-      const ids = items.map(x => x.id);
-      const idx = ids.indexOf(id);
-      const newIdx = idx + dir;
-      if (newIdx < 0 || newIdx >= ids.length) return;
-      [ids[idx], ids[newIdx]] = [ids[newIdx], ids[idx]];
-      saveOrder(ids);
-      doRefresh(body, countSpan, globalSection);
-    },
-    (id, qty) => {
-      setQuantity(id, qty);
-      doRefresh(body, countSpan, globalSection);
+  items.forEach((item, i) => {
+    let goldForItem = currentGold;
+    if (_mode === "cumulative") {
+      const spent = items.slice(0, i).reduce((s, x) => s + x.gold * x.qty, 0);
+      goldForItem = Math.max(0, currentGold - spent);
     }
-  )));
+    body.appendChild(renderItem(
+      item, goldForItem, _mode, i, items.length,
+      (id, dir) => {
+        const ids = items.map(x => x.id);
+        const idx = ids.indexOf(id);
+        const newIdx = idx + dir;
+        if (newIdx < 0 || newIdx >= ids.length) return;
+        [ids[idx], ids[newIdx]] = [ids[newIdx], ids[idx]];
+        saveOrder(ids);
+        doRefresh(body, countSpan, globalSection);
+      },
+      (id, qty) => {
+        setQuantity(id, qty);
+        doRefresh(body, countSpan, globalSection);
+      }
+    ));
+  });
 }
 
 function initShopGoals() {
