@@ -420,7 +420,7 @@ function renderEmpty(body) {
   body.appendChild(wrap);
 }
 
-let _mode = "individual";
+let _mode = localStorage.getItem("macondoplus_shop_mode") || "individual";
 let _refreshPending = false;
 
 function scheduleRefresh(body, countSpan, globalSection) {
@@ -503,12 +503,18 @@ function initShopGoals() {
   if (document.getElementById("macondoplus-goals-widget")) return;
 
   const {widget, body, countSpan, globalSection} = buildWidget();
+  globalSection.querySelectorAll(".macondoplus-mode-btn").forEach(b => {
+    const active = b.dataset.mode === _mode;
+    b.style.background = active ? "var(--color-ds-brown, #5c3d1e)" : "transparent";
+    b.style.color = active ? "var(--color-parchment, #f5e6c8)" : "var(--color-ds-brown, #5c3d1e)";
+  });
   document.body.appendChild(widget);
 
   globalSection.querySelectorAll(".macondoplus-mode-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       _mode = btn.dataset.mode;
+      localStorage.setItem("macondoplus_shop_mode", _mode);
       globalSection.querySelectorAll(".macondoplus-mode-btn").forEach(b => {
         const active = b.dataset.mode === _mode;
         b.style.background = active ? "var(--color-ds-brown, #5c3d1e)" : "transparent";
