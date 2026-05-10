@@ -9,6 +9,9 @@ function init() {
       justify-content: center;
       gap: 6px;
     }
+    div > div > div.flex.flex-col.gap-2 > a.group.relative.min-h-20.overflow-hidden.border-2.px-4.py-3.transition-colors {
+      min-height: 0 !important;
+    }
   `;
 }
 
