@@ -134,7 +134,7 @@
     const pct = Math.min(100, Math.round((mins / 60) * 100));
     const label = `${formatTime(mins)}/1hr`;
     const done = mins >= 60;
-    const fg = done ? "rgb(234 88 12)" : "rgb(104 77 58)";
+    const fg = done ? "rgb(206, 92, 35)" : "rgb(104 77 58)";
 
     let el = btn.querySelector(".mp-streak-time");
     if (!el) {
