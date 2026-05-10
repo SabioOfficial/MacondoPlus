@@ -23,7 +23,6 @@
         "scripts/modules/hide-idea-generator.js",
         "scripts/modules/shop-goals.js",
         "scripts/modules/persistent-filters.js",
-        "scripts/modules/infinite-scroll.js",
         "scripts/modules/streak-time-display.js",
         "scripts/modules/styling-fixes.js"
       ],
