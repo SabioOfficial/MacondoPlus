@@ -127,11 +127,12 @@
   }
 
   function processShop() {
-    const anyCard = document.querySelector("[data-flip-id]");
+    const anyCard = document.querySelector("[data-flip-id]:not([data-flip-id^='auto-'])");
     if (!anyCard) return;
     const grid = anyCard.parentElement;
 
-    const cards = [...grid.querySelectorAll("[data-flip-id]")];
+    const cards = [...grid.querySelectorAll("[data-flip-id]")]
+      .filter(c => !c.dataset.flipId.startsWith("auto-"));
     cards.forEach(addBadge);
     renderFilterBar(grid);
     applyFilter(cards);
