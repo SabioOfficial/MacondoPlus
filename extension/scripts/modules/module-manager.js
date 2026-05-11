@@ -60,6 +60,8 @@ function injectManagerButton() {
           style="flex-shrink: 0; margin-top: 2px; width: 36px; height: 20px; border-radius: 10px; border: 2px solid var(--color-ds-brown, #5c3d1e); cursor: pointer; position: relative; transition:background 0.2s;background:${on ? "var(--color-ds-brown,#5c3d1e)" : "transparent"};"
           aria-pressed="${on}"
           aria-label="Toggle ${mod.name}"
+          ${mod.coreModule ? "disabled" : ""}
+          title="${mod.coreModule ? "This module cannot be disabled" : ""}"
         >
           <span style="position:absolute;top:2px;left:${on ? "16px" : "2px"};width:12px;height:12px;border-radius:50%;background:${on ? "var(--color-parchment,#f5e6c8)" : "var(--color-ds-brown,#5c3d1e)"};transition:left 0.2s;"></span>
         </button>

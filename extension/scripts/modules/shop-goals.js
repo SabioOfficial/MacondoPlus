@@ -85,6 +85,7 @@ function buildWidget() {
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
     font-family: inherit;
     user-select: none;
+    animation: macondoplus-fadein 0.25s ease;
   `;
 
   const header = document.createElement("div");
@@ -434,7 +435,16 @@ function scheduleRefresh(body, countSpan, globalSection) {
 
 function doRefresh(body, countSpan, globalSection) {
   const widget = document.getElementById("macondoplus-goals-widget");
-  if (widget) widget.style.display = isShopVisible() ? "" : "none";
+  if (widget) {
+    const shouldShow = isShopVisible();
+    if (shouldShow && widget.style.display === "none") {
+      widget.style.display = "";
+      widget.style.animation = "macondoplus-fadein 250ms ease";
+    } else if (!shouldShow && widget.style.display !== "none") {
+      widget.style.animation = "macondoplus-fadeout 200ms ease forwards";
+      setTimeout(() => {widget.style.display = "none";}, 200);
+    }
+  };
 
   const items = parseShopItems();
   const currentGold = getCurrentGold();

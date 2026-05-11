@@ -12,12 +12,14 @@
     {id: "streak-time-display", name: "Streak Time Display", description: "Display how much time is left until your streak is locked in for the day!", category: "QoL", defaultEnabled: true},
     {id: "styling-fixes", name: "Styling Fixes", description: "Fixes minor styling issues for Macondo that pisses you off.", category: "Appearance", defaultEnabled: true},
     {id: "streak-intensity", name: "Streak Intensity", description: "Adds appearance changes to the Streak Calendar: the more time you spent working on that day, the more darker and red the day gets!", category: "Appearance", defaultEnabled: true},
+    {id: "macondoplus-styles", name: "Macondo+ Styles", description: "A core module that adds reusable Macondo+ styling.", category: "Core", defaultEnabled: true, coreModule: true},
   ];
   
   function isEnabled(id) {
+    const mod = MODULES.find(m => m.id === id);
+    if (mod?.coreModule) return true;
     const stored = localStorage.getItem(PREFIX + id);
     if (stored !== null) return stored === "true";
-    const mod = MODULES.find(m => m.id === id);
     return mod ? mod.defaultEnabled : true;
   }
 
