@@ -47,9 +47,58 @@
     });
   }
 
+  const LEGEND_STOPS = [
+    [0, "≤ 1hr"],
+    [60, "1hr"],
+    [120, "2hr"],
+    [180, "3hr"],
+    [360, "6hr"],
+    [720, "≥ 12hr"],
+  ];
+
+  function findLegend() {
+    for (const span of document.querySelectorAll(".inline-flex.items-center.gap-1")) {
+      if (span.textContent.includes("Active") && span.querySelector(".lucide-flame")) {
+        return span.parentElement;
+      }
+    }
+    return null;
+  }
+
+  function applyLegend() {
+    const legend = findLegend();
+    if (!legend || legend.dataset.mpIntensityLegend) return;
+    legend.dataset.mpIntensityLegend = "1";
+
+    const seperator = document.createElement("span");
+    seperator.style.cssText = `
+      width: 1px;
+      height: 10px;
+      background: currentColor;
+      opacity: 0.2;
+      margin: 0 2px;
+    `;
+    legend.appendChild(seperator);
+
+    LEGEND_STOPS.forEach(([mins, label]) => {
+      const [r, g, b] = minsToRGB(mins === 0 ? 0 : mins);
+      const dr = Math.round(r*.7), dg = Math.round(g*.7), db = Math.round(b*.7);
+      const entry = document.createElement("span");
+      entry.className = "inline-flex items-center gap-1";
+      entry.innerHTML = `
+        <span style="width: 12px; height: 12px; display: inline-block; background: rgb(${r}, ${g}, ${b}); border: 1px solid rgb(${dr}, ${dg}, ${db}); flex-shrink: 0;"></span>${label}
+      `;
+      legend.appendChild(entry);
+    });
+  }
+
   function init() {
     applyIntensity(document);
-    const observer = new MutationObserver(() => applyIntensity(document));
+    applyLegend();
+    const observer = new MutationObserver(() => {
+      applyIntensity(document);
+      applyLegend();
+    });
     observer.observe(document.body, {
       childList: true,
       subtree: true,
