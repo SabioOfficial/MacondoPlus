@@ -50,7 +50,7 @@ function injectManagerButton() {
     return `
       <div data-module-row="${mod.id}" style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(92,61,30,0.1);">
         <div style="flex:1;min-width:0;">
-          <div style="font-size: 13px; font-weight: 700; color: var(--color-ds-brown, #5c3d1e);">${mod.name}</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--color-ds-brown, #5c3d1e);">${mod.name}</div>
           <div data-module-desc="${mod.id}" style="font-size: 11px; color: rgba(92,61,30,0.6); margin-top: 2px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${mod.description}</div>
         </div>
         <button
@@ -81,10 +81,10 @@ function injectManagerButton() {
   panel.innerHTML = `
     <div style="padding:14px 16px;border-bottom:2px solid rgba(92,61,30,0.2);display:flex;align-items:center;justify-content:space-between;">
       <div>
-        <div style="font-size:15px;font-weight:800;color:var(--color-ds-brown,#5c3d1e);">Macondo+ Modules</div>
-        <div style="font-size: 11px; color: rgba(92, 61, 30, 0.45); margin-top: 1px;">${totalEnabled} of ${MODULES.length} enabled</div>
+        <div style="font-size: 18px;font-weight:800;color:var(--color-ds-brown,#5c3d1e);">Modules</div>
+        <div style="font-size: 11px; color: rgba(92, 61, 30, 0.45); margin-top: 1px;">${totalEnabled} modules enabled</div>
       </div>
-      <input type="text" placeholder="Filter..." class="macondoplus-module-filter ds-input" style="width: 120px; font-size: 12px; padding: 4px 8px;"/>
+      <input type="text" placeholder="Filter..." class="macondoplus-module-filter ds-input" style="width: 150px; font-size: 12px; padding: 4px 8px;"/>
     </div>
     <div class="macondoplus-reload-callout" style="display: none; margin: 10px 12px 0; padding: 10px 12px; background: #fee2e2; border: 2px solid #ef4444; border-radius: 6px;">
       <div style="font-size: 12px; font-weight: 800; color: #b91c1c; margin-bottom: 2px;">Reload required!</div>
