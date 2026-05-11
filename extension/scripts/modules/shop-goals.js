@@ -422,6 +422,7 @@ function renderEmpty(body) {
 }
 
 let _mode = localStorage.getItem("macondoplus_shop_mode") || "individual";
+let _lastItems = [];
 let _refreshPending = false;
 
 function scheduleRefresh(body, countSpan, globalSection) {
@@ -443,10 +444,13 @@ function doRefresh(body, countSpan, globalSection) {
     } else if (!shouldShow && widget.style.display !== "none") {
       widget.style.animation = "macondoplus-fadeout 200ms ease forwards";
       setTimeout(() => {widget.style.display = "none";}, 200);
+      return;
     }
   };
 
-  const items = parseShopItems();
+  const parsed = parseShopItems();
+  const items = parsed.length ? parsed : _lastItems;
+  if (parsed.length) _lastItems = parsed;
   const currentGold = getCurrentGold();
 
   countSpan.textContent = items.length ? `${items.length} starred` : "";
