@@ -51,7 +51,7 @@ function injectManagerButton() {
       <div data-module-row="${mod.id}" style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(92,61,30,0.1);">
         <div style="flex:1;min-width:0;">
           <div style="font-size: 13px; font-weight: 700; color: var(--color-ds-brown, #5c3d1e);">${mod.name}</div>
-          <div style="font-size: 11px; color: rgba(92,61,30,0.6); margin-top: 2px;">${mod.description}</div>
+          <div data-module-desc="${mod.id}" style="font-size: 11px; color: rgba(92,61,30,0.6); margin-top: 2px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${mod.description}</div>
         </div>
         <button
           type="button"
@@ -149,6 +149,38 @@ function injectManagerButton() {
   });
 
   document.body.appendChild(panel);
+
+  panel.style.visibility = "hidden";
+  panel.style.display = "block";
+
+  panel.querySelectorAll("[data-module-desc]").forEach(descEl => {
+    if (descEl.scrollHeight <= descEl.clientHeight) return;
+    const readMore = document.createElement("button");
+    readMore.type = "button";
+    readMore.textContent = "Read more...";
+    readMore.style.cssText = `
+      display: inline;
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(92, 61, 30, 0.45);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    `;
+    let expanded = false;
+    readMore.addEventListener("click", (e) => {
+      e.stopPropagation();
+      expanded = !expanded;
+      descEl.style.webkitLineClamp = expanded ? "unset" : "2";
+      descEl.style.display = expanded ? "block" : "-webkit-box";
+      readMore.textContent = expanded ? "Read less..." : "Read more...";
+    });
+    descEl.after(readMore);
+  });
+
+  panel.style.display = "none";
+  panel.style.visibility = "";
 
   btn.addEventListener("click", (e) => {
     e.stopPropagation();

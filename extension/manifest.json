@@ -26,7 +26,8 @@
         "scripts/modules/streak-time-display.js",
         "scripts/modules/styling-fixes.js",
         "scripts/modules/streak-intensity.js",
-        "scripts/modules/macondoplus-styles.js"
+        "scripts/modules/macondoplus-styles.js",
+        "scripts/modules/shop-categories.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"

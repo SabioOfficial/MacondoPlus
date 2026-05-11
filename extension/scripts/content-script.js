@@ -13,6 +13,7 @@
     {id: "styling-fixes", name: "Styling Fixes", description: "Fixes minor styling issues for Macondo that pisses you off.", category: "Appearance", defaultEnabled: true},
     {id: "streak-intensity", name: "Streak Intensity", description: "Adds appearance changes to the Streak Calendar: the more time you spent working on that day, the more darker and red the day gets!", category: "Appearance", defaultEnabled: true},
     {id: "macondoplus-styles", name: "Macondo+ Styles", description: "A core module that adds reusable Macondo+ styling.", category: "Core", defaultEnabled: true, coreModule: true},
+    {id: "shop-categories", name: "Shop Categories", description: "Adds categories for shop items and a filter to narrow your search.", category: "Tools", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
