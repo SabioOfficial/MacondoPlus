@@ -2,6 +2,7 @@
   if (!window.MacondoPlus?.isEnabled("streak-intensity")) return;
 
   const STOPS = [
+    [0, 254, 240, 138],
     [60, 249, 115, 22],
     [75, 245, 100, 24],
     [90, 240, 82, 26],
