@@ -1,11 +1,172 @@
 (() => {
   if (!window.MacondoPlus?.isEnabled("achievements")) return;
 
+  let _nuxtCache = null;
+  function getNuxtArray() {
+    if (_nuxtCache) return _nuxtCache;
+    try {
+      const el = document.getElementById("__NUXT_DATA__");
+      _nuxtCache = JSON.parse(el?.textContent || "null") || [];
+    } catch {
+      _nuxtCache = [];
+    }
+    return _nuxtCache;
+  }
+
+  function getUserValue(field) {
+    const arr = getNuxtArray();
+    for (let i = 0; i < arr.length; i++) {
+      const obj = arr[i];
+      if (obj && typeof obj === "object" && !Array.isArray(obj) && "username" in obj && "email" in obj && field in obj) {
+        return arr[obj[field]];
+      }
+    }
+    return null;
+  }
+
+  function getGoldBalance() {
+    const arr = getNuxtArray();
+    for (let i = 0; i < arr.length; i++) {
+      const obj = arr[i];
+      if (obj && typeof obj === "object" && !Array.isArray(obj) && "$sgold_balance" in obj) {
+        const val = arr[obj["$sgold_balance"]];
+        return typeof val === "number" ? val : 0;
+      }
+    }
+    return 0;
+  }
+
+  function getProjectsData() {
+    const arr = getNuxtArray();
+    for (let i = 0; i < arr.length; i++) {
+      const obj = arr[i];
+      if (Array.isArray(obj) && obj.length > 0 && typeof obj[0] === "number") {
+        const first = arr[obj[0]];
+        if (first && typeof first === "object" && !Array.isArray(first) && "fruit" in first && "level" in first && "stage" in first) {
+          return obj.map(idx => {
+            const p = arr[idx];
+            if (!p) return null;
+            return {
+              level: parseInt(arr[p.level], 10) || 0,
+              stage: typeof arr[p.stage] === "number" ? arr[p.stage] : 0,
+            };
+          }).filter(Boolean);
+        }
+      }
+    }
+    return [];
+  }
+
+  const CATEGORIES = [
+    {id: "streak", label: "Streak", icon: "🔥"},
+    {id: "gold", label: "Gold", icon: "💰"},
+    {id: "projects", label: "Projects", icon: "📁"},
+    {id: "secret", label: "Secret", icon: "❓"},
+  ];
+
   const ACHIEVEMENTS = [
-    {id: "on-fire", name: "On Fire", description: "You're on fire!", emoji: "🔥", threshold: 5},
-    {id: "ablaze", name: "Ablaze", description: "Keep it up!", emoji: "🌋", threshold: 10},
-    {id: "raging", name: "Raging", description: "Amazing!!", emoji: "🧨", threshold: 15},
-    {id: "inferno", name: "Inferno", description: "Take a break...", emoji: "♨️", threshold: 30},
+    {
+      id: "on-fire", category: "streak", emoji: "🔥",
+      name: "On Fire", description: "You're on fire!",
+      hint: "5-day streak",
+      check: () => getStreak() >= 5,
+    },
+    {
+      id: "ablaze", category: "streak", emoji: "🌋",
+      name: "Ablaze", description: "Keep it up!",
+      hint: "10-day streak",
+      check: () => getStreak() >= 10,
+    },
+    {
+      id: "raging", category: "streak", emoji: "🧨",
+      name: "Raging", description: "Amazing!!",
+      hint: "15-day streak",
+      check: () => getStreak() >= 15,
+    },
+    {
+      id: "inferno", category: "streak", emoji: "♨️",
+      name: "Inferno", description: "Take a break soon...",
+      hint: "30-day streak",
+      check: () => getStreak() >= 30,
+    },
+    {
+      id: "unstoppable", category: "streak", emoji: "🏔️",
+      name: "Unstoppable", description: "Nothing can stop you.",
+      hint: "50-day streak",
+      check: () => getStreak() >= 50,
+    },
+    {
+      id: "legendary", category: "streak", emoji: "⚡",
+      name: "Legendary", description: "You're a legend.",
+      hint: "75-day streak",
+      check: () => getStreak() >= 75,
+    },
+    {
+      id: "first-gold", category: "gold", emoji: "💰",
+      name: "First Gold", description: "Your first earnings!",
+      hint: "Obtain your first payout.",
+      check: () => getGoldBalance() >= 1,
+    },
+    {
+      id: "gilded", category: "gold", emoji: "💎",
+      name: "Gilded", description: "The rich get richer.",
+      hint: "Earn 500 gold",
+      check: () => getGoldBalance() >= 500,
+    },
+    {
+      id: "hoarder", category: "gold", emoji: "👑",
+      name: "Hoarder", description: "Spare me some? 🥺",
+      hint: "Earn 1500 gold",
+      check: () => getGoldBalance() >= 1500,
+    },
+    {
+      id: "mr-krabs", category: "gold", emoji: "🧐",
+      name: "Mr Krabs", description: "I like money!",
+      hint: "Earn 3000 gold",
+      check: () => getGoldBalance() >= 3000,
+    },
+    {
+      id: "bank-of-macondo", category: "gold", emoji: "🏦",
+      name: "Bank of Macondo", description: "You now own the Bank of Macondo!",
+      hint: "Earn 5000 gold",
+      check: () => getGoldBalance() >= 5000,
+    },
+    {
+      id: "planted", category: "projects", emoji: "🌱",
+      name: "Planted", description: "Your journey begins.",
+      hint: "Submit 1 project",
+      check: () => getProjectsData().length >= 1,
+    },
+    {
+      id: "growing", category: "projects", emoji: "🌿",
+      name: "Growing", description: "The garden expands.",
+      hint: "Have 3 projects",
+      check: () => getProjectsData().length >= 3,
+    },
+    {
+      id: "forest", category: "projects", emoji: "🌿",
+      name: "Forest", description: "Roots run deep.",
+      hint: "Have 5 projects",
+      check: () => getProjectsData().length >= 5,
+    },
+    {
+      id: "prepared", category: "secret", emoji: "🧊",
+      name: "Prepared", description: "Always ready for the inevitable.",
+      hint: "???",
+      check: () => (getUserValue("streak_freezes_remaining") || 0) >= 6,
+    },
+    {
+      id: "professional", category: "secret", emoji: "🏅",
+      name: "Professional", description: "Future femboy- I mean Albert Einstein!",
+      hint: "???",
+      check: () => getProjectsData().some(p => p.stage >= 3),
+    },
+    {
+      id: "perfectionist", category: "secret", emoji: "💯",
+      name: "Perfectionist", description: "???",
+      hint: "???",
+      check: () => Object.keys(getUnlocked()).length >= 15,
+    },
   ];
 
   function getUnlocked() {
@@ -35,12 +196,23 @@
   }
 
   function checkAchievements() {
-    const streak = getStreak();
-    if (!streak) return;
-    const unlocked = getUnlocked();
     ACHIEVEMENTS.forEach(a => {
-      if (!unlocked[a.id] && streak >= a.threshold) unlock(a.id);
+      if (a.id === "perfectionist") return;
+      if (getUnlocked()[a.id]) return;
+      try {
+        if (a.check()) {
+          unlock(a.id);
+        }
+      } catch {}
     });
+    const perfectionist = ACHIEVEMENTS.find(a => a.id === "perfectionist");
+    if (perfectionist && !getUnlocked()[perfectionist.id]) {
+      try {
+        if (perfectionist.check()) {
+          unlock(perfectionist.id);
+        }
+      } catch {}
+    }
   }
 
   function buildPanel() {
@@ -51,115 +223,150 @@
       content.innerHTML = "";
       const unlocked = getUnlocked();
       const streak = getStreak();
+      const gold = getGoldBalance();
+      const projects = getProjectsData();
       const unlockedCount = ACHIEVEMENTS.filter(a => unlocked[a.id]).length;
 
-      const innerContent = document.createElement("div");
-      innerContent.className = "relative z-10 max-w-4xl mx-auto px-4 pb-12 pt-6 flex flex-col gap-6";
-      content.appendChild(innerContent);
+      const wrap = document.createElement("div");
+      wrap.className = "relative z-10 max-w-4xl mx-auto px-4 pb-12 pt-6 flex flex-col gap-6";
+      content.appendChild(wrap);
 
       const header = document.createElement("div");
       header.style.cssText = `
         display: flex;
         align-items: center;
-        justify-content: space-between;
         margin-bottom: 20px;
         padding-bottom: 12px;
         border-bottom: 2px solid rgba(92, 61, 30, 0.15);
       `;
       header.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="font-size: 44px;">🏆</span>
-          <div>
-            <h2 style="font-size: 18px; font-weight: 800; color: #5c3d1e; margin: 0;">Achievements</h2>
-            <p style="font-size: 14px; color: rgba(92, 61, 30, 0.55); margin: 3px 0 0;">${unlockedCount} / ${ACHIEVEMENTS.length} unlocked (${unlockedCount/ACHIEVEMENTS.length*100}%)</p>
-          </div>
+        <span style="font-size: 44px;">🏆</span>
+        <div>
+          <h2 style="font-size: 18px; font-weight: 800; color: #5c3d1e; margin: 0;">Achievements</h2>
+          <p style="font-size: 13px; color: rgba(92, 61, 30, 0.55); margin: 3px 0 0;">
+            ${unlockedCount} / ${ACHIEVEMENTS.length} unlocked (${Math.round(unlockedCount / ACHIEVEMENTS.length * 100)}%)
+          </p>
         </div>
       `;
-      innerContent.appendChild(header);
+      wrap.appendChild(header);
 
-      const pill = document.createElement("div");
-      pill.style.cssText = `
+      const stats = document.createElement("div");
+      stats.style.cssText = `
         display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 20px;
-        padding: 10px 14px;
-        background: rgba(92, 61, 30, 0.06);
-        border: 2px solid rgba(92, 61, 30, 0.12);
-      `;
-      pill.innerHTML = `
-        <span style="font-size: 18px;">🔥</span>
-        <span style="font-size: 13px; font-weight: 700; color: #5c3d1e;">Current streak: <span style="color: #c2410c;"><span style="font-size: 16px;">${streak}</span> day${streak !== 1 ? "s" : ""}</span></span>
-      `;
-      innerContent.appendChild(pill);
-
-      const list = document.createElement("div");
-      list.style.cssText = `
-        display: flex;
-        flex-direction: column;
         gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
       `;
-
-      ACHIEVEMENTS.forEach(a => {
-        const isUnlocked = !!unlocked[a.id];
-        const card = document.createElement("div");
-        card.style.cssText = `
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          padding: 14px 16px;
-          border: 2px solid ${isUnlocked ? "rgba(92, 61, 30, 0.3)" : "rgba(92, 61, 30, 0.1)"};
-          background: ${isUnlocked ? "rgba(92, 61, 30, 0.04)" : "transparent"};
-          opacity: ${isUnlocked ? "1" : "0.45"};
-          transition: opacity 200ms;
-        `;
-
-        const iconWrap = document.createElement("div");
-        iconWrap.style.cssText = `
-          width: 52px;
-          height: 52px;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 32px;
-          filter: ${isUnlocked ? "none" : "grayscale(1)"};
-        `;
-        iconWrap.textContent = a.emoji;
-
-        const info = document.createElement("div");
-        info.style.cssText = `
+      [
+        {icon: "🔥", label: "Streak", value: `${streak} day${streak !== 1 ? "s" : ""}`},
+        {icon: "💰", label: "Gold", value: gold},
+        {icon: "📁", label: "Projects", value: projects.length},
+      ].forEach(({icon, label, value}) => {
+        const pill = document.createElement("div");
+        pill.style.cssText = `
           flex: 1;
-          min-width: 0;
+          min-width: 100px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 14px;
+          background: rgba(92, 61, 30, 0.06);
+          border: 2px solid rgba(92, 61, 30, 0.12);
         `;
-        info.innerHTML = `
-          <div style="font-size: 14px; font-weight: 800; color: #5c3d1e;">${a.name}</div>
-          <div style="font-size: 12px; color: rgba(92, 61, 30, 0.6); margin-top: 2px;">${a.description}</div>
+        pill.innerHTML = `
+          <span style="font-size: 18px;">${icon}</span>
+          <div>
+            <div style="font-size: 10px; font-weight: 600; color: rgba(92, 61, 30, 0.5); text-transform: uppercase; letter-spacing: 0.5px;">${label}</div>
+            <div style="font-size: 15px; font-weight: 800; color: #5c3d1e;">${value}</div>
+          </div>
         `;
-
-        const status = document.createElement("div");
-        status.style.cssText = `
-          flex-shrink: 0;
-          text-align: right;
-        `;
-        if (isUnlocked) {
-          const date = new Date(unlocked[a.id]).toLocaleDateString();
-          status.innerHTML = `
-            <div style="font-size: 10px; margin-top: 2px; color: rgba(92, 61, 30, 0.45);">Unlocked ${date}</div>
-          `;
-        } else {
-          status.innerHTML = `
-            <div style="font-size: 11px; font-weight: 700; color: rgba(92, 61, 30, 0.4);">${a.threshold}-day streak</div>
-          `;
-        }
-
-        card.appendChild(iconWrap);
-        card.appendChild(info);
-        card.appendChild(status);
-        list.appendChild(card);
+        stats.appendChild(pill);
       });
+      wrap.appendChild(stats);
 
-      innerContent.appendChild(list);
+      CATEGORIES.forEach(cat => {
+        const catList = ACHIEVEMENTS.filter(a => a.category === cat.id);
+        const catUnlocked = catList.filter(a => unlocked[a.id]).length;
+
+        const section = document.createElement("div");
+        section.style.cssText = "margin-bottom: 22px;";
+
+        const catHeader = document.createElement("div");
+        catHeader.style.cssText = `
+          display: flex; align-items: center; gap: 8px;
+          margin-bottom: 10px; padding-bottom: 6px;
+          border-bottom: 1px solid rgba(92, 61, 30, 0.1);
+        `;
+        catHeader.innerHTML = `
+          <span style="font-size: 15px;">${cat.icon}</span>
+          <span style="font-size: 12px; font-weight: 800; color: #5c3d1e; text-transform: uppercase; letter-spacing: 0.5px;">${cat.label}</span>
+          <span style="font-size: 12px; color: rgba(92,61,30,.45); margin-left: auto;">
+            ${catUnlocked}/${catList.length} (${Math.round(catUnlocked / catList.length * 100)}%)
+          </span>
+        `;
+        section.appendChild(catHeader);
+
+        const list = document.createElement("div");
+        list.style.cssText = "display: flex; flex-direction: column; gap: 8px;";
+
+        catList.forEach(a => {
+          const isUnlocked = !!unlocked[a.id];
+          const card = document.createElement("div");
+          card.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 14px;
+            border: 2px solid ${isUnlocked ? "rgba(92,61,30,.3)" : "rgba(92,61,30,.1)"};
+            background: ${isUnlocked ? "rgba(92,61,30,.04)" : "transparent"};
+            opacity: ${isUnlocked ? "1" : "0.45"};
+            transition: opacity 200ms;
+          `;
+
+          const iconEl = document.createElement("div");
+          iconEl.style.cssText = `
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            filter: ${isUnlocked ? "none" : "grayscale(1)"};
+          `;
+          iconEl.textContent = a.emoji;
+
+          const infoEl = document.createElement("div");
+          infoEl.style.cssText = "flex: 1; min-width: 0;";
+          infoEl.innerHTML = `
+            <div style="font-size: 13px; font-weight: 800; color: #5c3d1e;">${a.name}</div>
+            <div style="font-size: 11px; color: rgba(92, 61, 30, 0.6); margin-top: 2px;">${a.description}</div>
+          `;
+
+          const statusEl = document.createElement("div");
+          statusEl.style.cssText = "flex-shrink: 0; text-align: right;";
+          if (isUnlocked) {
+            const d = new Date(unlocked[a.id]);
+            const date = d.toLocaleDateString("en-US");
+            const time = d.toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit", hour12: true});
+            statusEl.innerHTML = `
+              <div style="font-size: 10px; color: rgba(92,61,30,.45);">Unlocked ${date}, ${time}</div>
+            `;
+          } else {
+            statusEl.innerHTML = `
+              <div style="font-size: 11px; font-weight: 700; color: rgba(92, 61, 30, 0.4);">${a.hint}</div>
+            `;
+          }
+
+          card.appendChild(iconEl);
+          card.appendChild(infoEl);
+          card.appendChild(statusEl);
+          list.appendChild(card);
+        });
+
+        section.appendChild(list);
+        wrap.appendChild(section);
+      });
     }
 
     return {
