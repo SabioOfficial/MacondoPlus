@@ -27,7 +27,9 @@
         "scripts/modules/styling-fixes.js",
         "scripts/modules/streak-intensity.js",
         "scripts/modules/macondoplus-styles.js",
-        "scripts/modules/shop-categories.js"
+        "scripts/modules/shop-categories.js",
+        "scripts/modules/macondoplus-panel.js",
+        "scripts/modules/achievements.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
