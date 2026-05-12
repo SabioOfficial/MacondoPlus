@@ -10,7 +10,7 @@ document.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "Escape": {
       const backBtn = [...document.querySelectorAll("button, a")].find(el =>
-        el.textContent.includes("Back to farm")
+        el.textContent.includes("Back to farm") || el.textContent.includes("Back")
       );
       if (backBtn) {
         backBtn.click();
@@ -31,9 +31,9 @@ document.addEventListener("keydown", (e) => {
       document.querySelector(".house-area")?.click();
       break;
     }
-    case "/": {
-      e.preventDefault();
-      document.querySelector(".macondoplus-search-btn")?.click();
+    case "q":
+    case "Q": {
+      document.querySelector(".explore-area")?.click();
       break;
     }
   }
