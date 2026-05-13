@@ -22,10 +22,11 @@ jobs:
           -x ".github" -x ".github/*" \
           -x "README.md" \
       
+      - name: Set short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
-        with: 
-          name: macondoplus-${{github.sha}}
+        with:
+          name: macondoplus-${{env.SHORT_SHA}}
           path: macondoplus-use-this.zip
-          retention-days: 5
-          if-no-files-found: error
