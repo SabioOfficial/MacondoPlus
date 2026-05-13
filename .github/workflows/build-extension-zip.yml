@@ -1,0 +1,31 @@
+name: "Build Extension .zip"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Zip extension
+        run: |
+          zip -rq macondoplus-use-this.zip . \
+          -x "macondoplus-use-this.zip" \
+          -x ".git" -x ".git/*" \
+          -x ".github" -x ".github/*" \
+          -x "README.md" \
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: macondoplus-${{github.sha}}
+          path: macondoplus-use-this.zip
+          retention-days: 5
+          if-no-files-found: error
