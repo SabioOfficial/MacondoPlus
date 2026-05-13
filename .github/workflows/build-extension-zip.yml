@@ -16,12 +16,8 @@ jobs:
 
       - name: Zip extension
         run: |
-          zip -rq macondoplus-use-this-in-extensions-page.zip . \
-          -x "macondoplus-use-this-in-extensions-page.zip" \
-          -x ".git" -x ".git/*" \
-          -x ".github" -x ".github/*" \
-          -x "README.md" \
-      
+          cd extension
+          zip -rq ../macondoplus-use-this-in-extensions-page.zip .
       - name: Set short SHA
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
