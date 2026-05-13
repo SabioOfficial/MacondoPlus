@@ -45,11 +45,17 @@ function parseShopItems() {
     const name = el.querySelector("h3")?.textContent.trim() ?? "?";
     const img = el.querySelector(".aspect-\\[4\\/3\\] img")?.src ?? el.querySelector("img[alt]")?.src ?? "";
     const hours = el.querySelector(".text-ds-brown\\/55.font-bold")?.textContent.trim() ?? "";
-    const buyBtn = el.querySelector("button.ds-btn-primary");
-    const goldMatch = buyBtn?.textContent.match(/\d+/);
+    const buyBtn = el.querySelector("button.ds-btn-primary, button.ds-btn-ghost");
+    const priceSpan = el.querySelector("span.text-lg.font-bold.text-ds-brown");
+    const goldSource = priceSpan ?? buyBtn;
+    const goldMatch = goldSource?.textContent.match(/\d+/);
     const gold = goldMatch ? parseInt(goldMatch[0], 10) : 0;
+    const grantSpan = el.querySelector(".text-xs.text-ds-brown\\/70.font-bold");
+    const grantMatch = grantSpan?.textContent.match(/\$(\d+(?:\.\d+)?)/);
+    const grantValue = grantMatch ? parseFloat(grantMatch[1]) : 0;
 
-    items.push({id: el.dataset.flipId, name, img, gold, hours});
+    const locked = !!el.querySelector("button.ds-btn-ghost");
+    items.push({id: el.dataset.flipId, name, img, gold, hours, grantValue, locked});
   });
 
   items.forEach(item => {item.qty = quantities[item.id] || 1;});
@@ -182,7 +188,7 @@ function buildWidget() {
   return {widget, body, countSpan, globalSection};
 }
 
-function makeBar(pct, done) {
+function makeBar(pct, done, locked) {
   const wrap = document.createElement("div");
   wrap.style.cssText = `
     margin: 4px 0 3px;
@@ -196,7 +202,7 @@ function makeBar(pct, done) {
   fill.style.cssText = `
     height: 100%;
     width: ${Math.min(pct, 100)}%;
-    background: ${done ? "#16a34a" : "#8f690a"};
+    background: ${locked ? "repeating-linear-gradient(-45deg, #f97316, #f97316 3px, #fed7aa 3px, #fed7aa 7px)" : done ? "#16a34a" : "#8f690a"};
     border-radius: 3px;
     transition: width 0.4s;
   `;
@@ -281,7 +287,7 @@ function renderItem(item, currentGold, mode, index, total, onMove, onQtyChange) 
   const effectiveCost = item.gold * item.qty;
   const pct = effectiveCost > 0 ? (currentGold / effectiveCost) * 100 : 100;
   const done = currentGold >= effectiveCost;
-  const bar = makeBar(pct, done);
+  const bar = makeBar(pct, done, item.locked);
 
   const metaEl = document.createElement("div");
   metaEl.style.cssText = `
@@ -393,6 +399,21 @@ function renderItem(item, currentGold, mode, index, total, onMove, onQtyChange) 
   goldDisplay.appendChild(goldIcon);
   goldDisplay.appendChild(goldText);
 
+  if (item.grantValue) {
+    const totalGrant = item.grantValue * item.qty;
+    const formatted = Number.isInteger(totalGrant) ? `$${totalGrant}` : `$${totalGrant.toFixed(2)}`;
+
+    const grantDisplay = document.createElement("span");
+    grantDisplay.style.cssText = `
+      font-size: 10px;
+      font-weight: 700;
+      color: #16a34a;
+      flex-shrink: 0;
+    `;
+    grantDisplay.textContent = formatted;
+    info.appendChild(grantDisplay);
+  }
+
   rightMeta.appendChild(qtyRow);
   rightMeta.appendChild(goldDisplay);
 
@@ -404,6 +425,12 @@ function renderItem(item, currentGold, mode, index, total, onMove, onQtyChange) 
   info.appendChild(metaEl);
   row.appendChild(thumb);
   row.appendChild(info);
+
+  if (item.locked) {
+    row.style.filter = "grayscale(1)";
+    row.style.opacity = "0.45";
+  }
+
   return row;
 }
 
@@ -465,14 +492,70 @@ function doRefresh(body, countSpan, globalSection) {
       const total = items.reduce((s, i) => s + i.gold * i.qty, 0);
       pct = total > 0 ? Math.min((currentGold / total) * 100, 100) : 100;
       label = `${currentGold} / ${total} gold total`;
+
+      while (globalBar.firstChild) globalBar.removeChild(globalBar.firstChild);
+
+      if (items.some(i => i.locked) && total > 0) {
+        globalBar.style.cssText = `
+          height: 100%;
+          width: 100%;
+          background: transparent;
+          display: flex;
+          border-radius: 4px;
+          overflow: hidden;
+          transition: none;
+        `;
+        let remainingGold = currentGold;
+        items.forEach(item => {
+          const itemCost = item.gold * item.qty;
+          const segPct = (itemCost / total * 100).toFixed(3);
+          const itemFilled = Math.min(remainingGold, itemCost);
+          const fillPct = itemCost > 0 ? (itemFilled / itemCost * 100).toFixed(3) : 0;
+          remainingGold = Math.max(0, remainingGold - itemCost);
+          
+          const seg = document.createElement("div");
+          seg.style.cssText = `
+            width: ${segPct}%;
+            height: 100%;
+            background: rgba(92, 61, 30, 0.12);
+            overflow: hidden;
+            flex-shrink: 0;
+          `;
+
+          const fill = document.createElement("div");
+          fill.style.cssText = `
+            height: 100%;
+            width: ${fillPct}%;
+            background: ${item.locked ? "repeating-linear-gradient(-45deg, #f97316, #f97316 3px, #fed7aa 3px, #fed7aa 7px)" : itemFilled >= itemCost ? "#16a34a" : "#8f690a"};
+            transition: width 400ms;
+          `;
+
+          seg.appendChild(fill);
+          globalBar.appendChild(seg);
+        });
+      } else {
+        globalBar.style.cssText = `
+          height: 100%;
+          width: ${pct.toFixed(1)}%;
+          background: ${pct >= 100 ? "#16a34a" : "#8f690a"};
+          border-radius: 4px;
+          transition: width 400ms;
+        `;
+      }
     } else {
       const avg = items.reduce((s, i) => s + Math.min((currentGold / ((i.gold * i.qty) || 1)) * 100, 100), 0) / items.length;
       pct = avg;
       const affordable = items.filter(i => currentGold >= i.gold).length;
       label = `${affordable} / ${items.length} affordable`;
+      while (globalBar.firstChild) globalBar.removeChild(globalBar.firstChild);
+      globalBar.style.cssText = `
+        height: 100%;
+        width: ${pct.toFixed(1)}%;
+        background: ${pct >= 100 ? "#16a34a" : "#8f690a"};
+        border-radius: 4px;
+        transition: width 400ms;
+      `;
     }
-    globalBar.style.width = `${pct.toFixed(1)}%`;
-    globalBar.style.background = pct >= 100 ? "#16a34a" : "#8f690a";
     globalGold.textContent = label;
     globalPct.textContent = `${pct.toFixed(1)}%`;
   } else {
