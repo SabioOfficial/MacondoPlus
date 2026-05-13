@@ -2,17 +2,17 @@
   if (!window.MacondoPlus?.isEnabled("shop-categories")) return;
 
   const ITEM_CATEGORIES = {
-    "event_invite": "Event",
-    "travel_stipend": "Event",
-    "streak_freeze": "Consumable",
-    "10": "Food", "18": "Food", "19": "Food", "20": "Food", "21": "Food", "23": "Food", "26": "Food", "27": "Food", "28": "Food", "29": "Food",
-    "2": "Tech", "4": "Tech", "7": "Tech", "9": "Tech", "13": "Tech", "14": "Tech", "15": "Tech", "16": "Tech", "30": "Tech", "31": "Tech", "36": "Tech", "42": "Tech", "43": "Tech",
-    "57": "Tech", "62": "Tech", "64": "Tech", "65": "Tech", "66": "Tech",
-    "32": "3D Printing", "35": "3D Printing", "37": "3D Printing", "58": "3D Printing", "59": "3D Printing",
-    "12": "Gaming", "34": "Gaming", "44": "Gaming", "47": "Gaming", "51": "Gaming", "54": "Gaming", "63": "Gaming",
-    "1": "Apple", "11": "Apple", "43": "Apple", "52": "Apple", "53": "Apple", "60": "Apple", "61": "Apple",
-    "8": "Grant", "45": "Grant", "48": "Grant", "49": "Grant", "56": "Grant", "68": "Grant",
-    "3": "Merch", "17": "Merch", "33": "Merch", "46": "Merch", "50": "Merch", "55": "Merch",
+    "event_invite": ["Event"],
+    "travel_stipend": ["Event"],
+    "streak_freeze": ["Consumable"],
+    "10": ["Food"], "18": ["Food"], "19": ["Food"], "20": ["Food"], "21": ["Food"], "23": ["Food"], "26": ["Food"], "27": ["Food"], "28": ["Food"], "29": ["Food"],
+    "2": ["Tech"], "4": ["Tech"], "7": ["Tech"], "9": ["Tech"], "13": ["Tech"], "14": ["Tech"], "15": ["Tech"], "16": ["Tech"], "30": ["Tech"], "31": ["Tech"], "36": ["Tech"], "42": ["Tech"], "43": ["Tech"],
+    "57": ["Tech", "Grant"], "62": ["Tech"], "64": ["Tech"], "65": ["Tech"], "66": ["Tech"],
+    "32": ["Tech", "3D Printing"], "35": ["3D Printing"], "37": ["Tech", "3D Printing"], "58": ["Tech", "3D Printing"], "59": ["Tech", "3D Printing"],
+    "34": ["Gaming", "Grant"], "44": ["Gaming", "Grant"], "47": ["Gaming", "Merch"], "51": ["Tech", "Gaming"], "54": ["Tech", "Gaming"], "63": ["Tech", "Gaming"], "68": ["Gaming", "Grant"],
+    "1": ["Tech", "Apple"], "11": ["Tech", "Apple"], "43": ["Tech", "Apple"], "52": ["Tech", "Apple"], "53": ["Tech", "Apple"], "60": ["Tech", "Apple"], "61": ["Apple", "Grant"],
+    "8": ["Grant"], "12": ["Grant"], "45": ["Grant"], "48": ["Tech", "Grant"], "49": ["Tech", "Grant"], "56": ["Grant"],
+    "3": ["Merch"], "17": ["Merch"], "33": ["Merch"], "46": ["Merch"], "50": ["Merch"], "55": ["Merch"],
   };
 
   const COLORS = {
@@ -28,41 +28,54 @@
     "Other": {bg: "#f5f5f5", border: "#9ca3af", text: "#374151"},
   };
 
-  function getCategory(flipId) {
-    return ITEM_CATEGORIES[flipId] ?? "Other";
+  function getCategories(flipId) {
+    return ITEM_CATEGORIES[flipId] ?? ["Other"];
   }
 
   function addBadge(card) {
     if (card.querySelector(".mp-cat-badge")) return;
-    const cat = getCategory(card.dataset.flipId);
-    const c = COLORS[cat];
-    const badge = document.createElement("div");
-    badge.className = "mp-cat-badge";
-    badge.textContent = cat;
-    badge.style.cssText = `
+    const cats = getCategories(card.dataset.flipId);
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "mp-cat-badge";
+    wrapper.style.cssText = `
       position: absolute;
       right: 12px;
       bottom: 110px;
       z-index: 10;
-      padding: 2px 7px;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 3px;
-      border: 1.5px solid ${c.border};
-      background: ${c.bg};
-      color: ${c.text};
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 3px;
       pointer-events: none;
     `;
-    card.appendChild(badge);
+
+    cats.forEach(cat => {
+      const c = COLORS[cat] ?? COLORS["Other"];
+      const chip = document.createElement("div");
+      chip.textContent = cat;
+      chip.style.cssText = `
+        padding: 2px 7px;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 3px;
+        border: 1.5px solid ${c.border};
+        background: ${c.bg};
+        color: ${c.text};
+      `;
+      wrapper.appendChild(chip);
+    });
+
+    card.appendChild(wrapper);
   }
 
   let activeFilter = "All";
 
   function applyFilter(cards) {
     cards.forEach(card => {
-      const show = activeFilter === "All" || getCategory(card.dataset.flipId) === activeFilter;
+      const show = activeFilter === "All" || getCategories(card.dataset.flipId).includes(activeFilter);
       card.style.display = show ? "" : "none";
     });
   }
@@ -71,7 +84,7 @@
     if (document.querySelector(".mp-cat-filterbar")) return;
 
     const cards = [...grid.querySelectorAll("[data-flip-id]")];
-    const cats = ["All", ...new Set(cards.map(c => getCategory(c.dataset.flipId)))];
+    const cats = ["All", ...new Set(cards.flatMap(c => getCategories(c.dataset.flipId)))];
 
     const bar = document.createElement("div");
     bar.className = "mp-cat-filterbar";
