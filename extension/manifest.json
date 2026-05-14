@@ -37,5 +37,11 @@
       "run_at": "document_start"
     }
   ],
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "macondoplus@extension",
+      "strict_min_version": "109.0"
+    }
+  }
 }
