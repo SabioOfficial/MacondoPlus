@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Macondo+",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A QoL-focused browser extension for Macondo.",
   "icons": {
     "16": "images/icon-16.png",
@@ -41,7 +41,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "macondoplus@extension",
-      "strict_min_version": "109.0"
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   }
 }
