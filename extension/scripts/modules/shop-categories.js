@@ -11,7 +11,7 @@
     "2": ["Tech"], "4": ["Tech"], "7": ["Tech"], "9": ["Tech"], "13": ["Tech"], "14": ["Tech"], "15": ["Tech"], "16": ["Tech"], "30": ["Tech"], "31": ["Tech"], "36": ["Tech"],
     "42": ["Tech"], "43": ["Tech"], "57": ["Tech", "Grant"], "62": ["Tech"], "64": ["Tech"], "65": ["Tech"],  "66": ["Tech"], "69": ["Tech", "Grant"], "70": ["Tech", "Grant"],
     "72": ["Tech"], "73": ["Tech"], "74": ["Tech"], "75": ["Tech"], "77": ["Tech", "Grant"], "78": ["Tech"], "79": ["Tech"], "81": ["Tech", "Grant"], "82": ["Tech"],
-    "83": ["Tech"], "84": ["Tech", "Grant"],
+    "83": ["Tech"], "84": ["Tech", "Grant"], "85": ["Tech"], "86": ["Tech"],
 
     "32": ["Tech", "3D Printing"], "35": ["3D Printing"], "37": ["Tech", "3D Printing"], "58": ["Tech", "3D Printing"], "59": ["Tech", "3D Printing"],
 
