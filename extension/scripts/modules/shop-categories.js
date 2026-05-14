@@ -5,13 +5,23 @@
     "event_invite": ["Event"],
     "travel_stipend": ["Event"],
     "streak_freeze": ["Consumable"],
+
     "10": ["Food"], "18": ["Food"], "19": ["Food"], "20": ["Food"], "21": ["Food"], "23": ["Food"], "26": ["Food"], "27": ["Food"], "28": ["Food"], "29": ["Food"],
-    "2": ["Tech"], "4": ["Tech"], "7": ["Tech"], "9": ["Tech"], "13": ["Tech"], "14": ["Tech"], "15": ["Tech"], "16": ["Tech"], "30": ["Tech"], "31": ["Tech"], "36": ["Tech"], "42": ["Tech"], "43": ["Tech"],
-    "57": ["Tech", "Grant"], "62": ["Tech"], "64": ["Tech"], "65": ["Tech"], "66": ["Tech"],
+
+    "2": ["Tech"], "4": ["Tech"], "7": ["Tech"], "9": ["Tech"], "13": ["Tech"], "14": ["Tech"], "15": ["Tech"], "16": ["Tech"], "30": ["Tech"], "31": ["Tech"], "36": ["Tech"],
+    "42": ["Tech"], "43": ["Tech"], "57": ["Tech", "Grant"], "62": ["Tech"], "64": ["Tech"], "65": ["Tech"],  "66": ["Tech"], "69": ["Tech", "Grant"], "70": ["Tech", "Grant"],
+    "72": ["Tech"], "73": ["Tech"], "74": ["Tech"], "75": ["Tech"], "77": ["Tech", "Grant"], "78": ["Tech"], "79": ["Tech"], "81": ["Tech", "Grant"], "82": ["Tech"],
+    "83": ["Tech"], "84": ["Tech", "Grant"],
+
     "32": ["Tech", "3D Printing"], "35": ["3D Printing"], "37": ["Tech", "3D Printing"], "58": ["Tech", "3D Printing"], "59": ["Tech", "3D Printing"],
-    "34": ["Gaming", "Grant"], "44": ["Gaming", "Grant"], "47": ["Gaming", "Merch"], "51": ["Tech", "Gaming"], "54": ["Tech", "Gaming"], "63": ["Tech", "Gaming"], "68": ["Gaming", "Grant"],
-    "1": ["Tech", "Apple"], "11": ["Tech", "Apple"], "43": ["Tech", "Apple"], "52": ["Tech", "Apple"], "53": ["Tech", "Apple"], "60": ["Tech", "Apple"], "61": ["Apple", "Grant"],
-    "8": ["Grant"], "12": ["Grant"], "45": ["Grant"], "48": ["Tech", "Grant"], "49": ["Tech", "Grant"], "56": ["Grant"],
+
+    "34": ["Gaming", "Grant"], "44": ["Gaming", "Grant"], "47": ["Gaming", "Merch"], "51": ["Tech", "Gaming"], "54": ["Tech", "Gaming"], "63": ["Tech", "Gaming"],
+    "68": ["Gaming", "Grant"],
+
+    "1": ["Tech", "Apple"], "11": ["Tech", "Apple"], "43": ["Tech", "Apple"], "52": ["Tech", "Apple"], "53": ["Tech", "Apple"], "60": ["Tech", "Apple"],"61": ["Apple", "Grant"],
+
+    "8": ["Grant"], "12": ["Grant"], "45": ["Grant"], "48": ["Tech", "Grant"], "49": ["Tech", "Grant"], "56": ["Grant"], "71": ["Grant"], "76": ["Grant"], "80": ["Grant"],
+
     "3": ["Merch"], "17": ["Merch"], "33": ["Merch"], "46": ["Merch"], "50": ["Merch"], "55": ["Merch"],
   };
 
