@@ -3,19 +3,13 @@
 </div>
 <div align="center">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/SabioOfficial/MacondoPlus?style=for-the-badge">
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/SabioOfficial/MacondoPlus?style=for-the-badge">
 </div>
 <br>
 <div align="center">
   Macondo+ <i>(or MacondoPlus)</i> is a QoL-focused browser extension for Chrome and Firefox that improves the Macondo website drastically. From dark mode to keyboard shortcuts, from shop goals to displaying your progress on securing your streak for the day, we've got you covered!
 </div>
 <br>
-<div align="center">
-  <b>
-    * | * | * | * | * | * | * | * | * | * | * | * | * | * <br>
-    Macondo+ is not yet released.<br>
-    . | . | . | . | . | . | . | . | . | . | . | . | . | . | . | . 
-  </b>
-</div>
 <h2>Table of contents</h2>
 <ul>
   <li>
@@ -33,14 +27,21 @@
         </ul>
       </li>
       <li>
+        <a href="#core">Core</a>
+      </li>
+      <li>
         <a href="#appearance">Appearance</a>
         <ul>
           <li><a href="#dark-mode">Dark Mode</a></li>
+          <li><a href="#streak-intensity">Streak Intensity</a></li>
+          <li><a href="#styling-fixes">Styling Fixes</a></li>
         </ul>
       </li>
       <li>
         <a href="#tools">Tools</a>
         <ul>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#shop-categories">Shop Categories</a></li>
           <li><a href="#shop-goals">Shop Goals</a></li>
           <li><a href="#styling-fixes">Styling Fixes</a></li>
         </ul>
@@ -90,6 +91,10 @@ Remembers your last used explore filters across sessions.
 
 Display how much time is left until your streak is logged in for the day!
 
+### Core
+
+More developer information will be displayed for Core modules soon.
+
 ### Appearance
 
 This is one of the three categories a module can be. This category is for modules that add appearance changes to the website.
@@ -98,9 +103,25 @@ This is one of the three categories a module can be. This category is for module
 
 Adds dark mode to Macondo (WIP)
 
+#### Streak Intensity
+
+Adds appearance changes to the Streak Calendar: the more time you spent working on that day, the more darker and red the day gets!
+
+#### Styling Fixes
+
+Fixes minor styling issues for Macondo that pisses you off.
+
 ### Tools
 
 This is one of the three categories a module can be. This category is for modules that add additional tools to the website.
+
+#### Achievements
+
+Adds achievements.
+
+#### Shop Categories
+
+Adds categories for shop items and a filter to narrow your search.
 
 #### Shop Goals
 
