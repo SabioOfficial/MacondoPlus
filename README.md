@@ -47,6 +47,13 @@
       </li>
     </ul>
   </li>
+  <li>
+    <a href="#installation">Installation</a>
+    <ul>
+      <li><a href="#from-source">From Source</a></li>
+      <li><a href="#from-webstore">From Webstore</a></li>
+    </ul>
+  </li>
 </ul>
 
 ## Modules
@@ -102,3 +109,30 @@ Adds shop goals to the Shop.
 #### Styling Fixes
 
 Fixes minor styling issues for Macondo that pisses you off.
+
+## Installation
+
+### From Source
+
+> Unstable
+
+Click on "Actions" on the Navigation bar, click on the first result (for Build Extension .zip), scroll down until you find "Artifacts". Download the "macondoplus-_(commit hash)_-unzip" and extract it. Then, it will create "macondoplus-use-this-in-extensions-page.zip". Now, follow the specific instructions on your respective browsers:
+
+#### Chrome
+
+> Please do the instructions above this browser-specific tutorial as it is requried.
+
+Go to chrome://extensions/ on the URL bar. Unzip your zip once more to a folder (create one), and press the "Load unpacked" button on the top left of your screen in the Chrome Extensions tab. Choose the folder you just extracted your files to, which should have the images, scripts, manifest.json.
+
+#### Firefox
+
+> Please do the instructions under <a href="#from-source">"From Source"</a> as it is requried.
+
+Go to about:addons on the URL bar. Press on the cogwheel which should be located in the top center-ish part of your screen (underneath the search bar). Press on it and click on "Install Add-on From File...". Select your zip.
+
+### From Webstore
+
+|                **Browser**                |     **Link**    |
+|:-----------------------------------------:|:---------------:|
+| Chromium (Chrome, Arc, Brave, Edge, etc.) | [Chrome Web Store](https://chromewebstore.google.com/detail/macondo+/ldhbamehlholbmcfmihlhagjpdkmjlgo) |
+| Firefox (Firefox, Zen Browser, etc.)      | [Firefox Addons](https://notavailableyet.silly/) |
