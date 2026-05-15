@@ -1,28 +1,22 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-gray-950);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+}
+
+.parallax-bg {
+  position: absolute;
+  inset: -60px;
+  background: url("/screenshot.png") center / cover no-repeat;
+  filter: blur(12px) brightness(0.3);
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
 button, .btn {
@@ -31,4 +25,12 @@ button, .btn {
   padding: 0.5rem 1rem;
   font-size: clamp(12px, 1.2vw, 48px);
   border: solid var(--color-gray-600) 2px;
+  font-weight: 600;
+  transition: all 150ms ease;
+}
+
+button:hover, .btn:hover {
+  transform: scale(1.05);
+  background: var(--color-white);
+  color: var(--color-black)
 }
