@@ -29,7 +29,8 @@
         "scripts/modules/macondoplus-styles.js",
         "scripts/modules/shop-categories.js",
         "scripts/modules/macondoplus-panel.js",
-        "scripts/modules/achievements.js"
+        "scripts/modules/achievements.js",
+        "scripts/modules/shop-sort-enhanced.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
