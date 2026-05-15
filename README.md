@@ -156,4 +156,4 @@ Go to about:addons on the URL bar. Press on the cogwheel which should be located
 |                **Browser**                |     **Link**    |
 |:-----------------------------------------:|:---------------:|
 | Chromium (Chrome, Arc, Brave, Edge, etc.) | [Chrome Web Store](https://chromewebstore.google.com/detail/macondo+/ldhbamehlholbmcfmihlhagjpdkmjlgo) |
-| Firefox (Firefox, Zen Browser, etc.)      | [Firefox Addons](https://notavailableyet.silly/) |
+| Firefox (Firefox, Zen Browser, etc.)      | [Firefox Addons](https://addons.mozilla.org/en-US/firefox/addon/macondo/) |
