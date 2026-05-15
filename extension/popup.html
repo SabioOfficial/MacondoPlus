@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 340px;
+        font-family: "Inter", sans-serif;
+        background: #fdf6e8;
+        color: #5c3d1e;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 14px 12px;
+        border-bottom: 2px solid rgba(92, 61, 30, 0.12);
+      }
+
+      .header img {
+        width: 60px;
+        height: auto;
+      }
+
+      .title {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .version {
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 99px;
+        background: rgba(92, 61, 30, 0.1);
+        color: rgba(92, 61, 30, 0.6);
+        margin-top: 4px;
+        display: inline-block;
+      }
+
+      .section-label {
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.4;
+        padding: 10px 14px 6px;
+      }
+
+      .commits {
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 0 0 6px;
+      }
+      
+      .commits::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      .commits::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .commits::-webkit-scrollbar-thumb {
+        background: rgba(92, 61, 30, 0.2);
+        border-radius: 2px;
+      }
+
+      .commit {
+        padding: 7px 14px;
+        border-bottom: 1px solid rgba(92, 61, 30, 0.07);
+        cursor: pointer;
+        transition: background 120ms;
+      }
+      
+      .commit:last-child {
+        border-bottom: none;
+      }
+
+      .commit:hover {
+        background: rgba(92, 61, 30, 0.05);
+      }
+
+      .commit-top {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        margin-bottom: 2px;
+      }
+
+      .commit-msg {
+        font-size: 12px;
+        font-weight: 600;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .commit-stats {
+        font-size: 10px;
+        font-weight: 700;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .add {
+        color: #15803d;
+      }
+
+      .del {
+        color: #b91c1c;
+      }
+
+      .commit-meta {
+        font-size: 10px;
+        opacity: 0.45;
+        display: flex;
+        gap: 6px;
+      }
+
+      .commit-sha {
+        font-family: monospace;
+        font-size: 9.5px;
+      }
+
+      .state {
+        padding: 20px 14px;
+        font-size: 12px;
+        opacity: 0.5;
+        text-align: center;
+      }
+
+      .state-error {
+        color: #b91c1c;
+        opacity: 0.8;
+      }
+
+      .footer {
+        display: flex;
+        gap: 6px;
+        padding: 10px 14px 12px;
+        border-top: 2px solid rgba(92, 61, 30, 0.12);
+      }
+
+      .link-btn {
+        flex: 1;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: "Inter", sans-serif;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 5px 0;
+        border-radius: 4px;
+        border: 2px solid rgba(92, 61, 30, 0.25);
+        background: transparent;
+        color: #5c3d1e;
+        cursor: pointer;
+        transition: background 150ms, border-color 150ms;
+      }
+
+      .link-btn:hover {
+        background: rgba(92, 61, 30, 0.08);
+        border-color: rgba(92, 61, 30, 0.5);
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="header">
+      <img src="images/icon-128.png" alt="Macondo+">
+      <div>
+        <div class="title">Macondo+</div>
+        <span class="version" id="version">v?.?.?</span>
+      </div>
+    </div>
+
+    <div class="section-label">Recent Commits <small>(coming soon to stable!)</small></div>
+    <div class="commits" id="commits">
+      <div class="state">Loading...</div>
+    </div>
+
+    <div class="footer">
+      <button class="link-btn" id="btn-macondo">Macondo</button>
+      <button class="link-btn" id="btn-github">GitHub</button>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
