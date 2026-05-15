@@ -20,4 +20,4 @@ jobs:
         run: npm install -g addons-linter
 
       - name: Run AMO Validator
-        run: addons-linter . --output=text --enable-color
+        run: addons-linter ./extension --output=text --enable-color
