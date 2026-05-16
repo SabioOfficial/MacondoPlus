@@ -196,21 +196,12 @@
   }
 
   function checkAchievements() {
-    ACHIEVEMENTS.forEach(a => {
-      if (a.id === "perfectionist") return;
-      if (getUnlocked()[a.id]) return;
+    const sorted = [...ACHIEVEMENTS].sort((a, b) => a.id === "perfectionist" ? 1 : b.id === "perfectionist" ? -1 : 0);
+    const unlocked = getUnlocked();
+    for (const a of sorted) {
+      if (unlocked[a.id]) continue;
       try {
-        if (a.check()) {
-          unlock(a.id);
-        }
-      } catch {}
-    });
-    const perfectionist = ACHIEVEMENTS.find(a => a.id === "perfectionist");
-    if (perfectionist && !getUnlocked()[perfectionist.id]) {
-      try {
-        if (perfectionist.check()) {
-          unlock(perfectionist.id);
-        }
+        if (a.check()) unlock(a.id);
       } catch {}
     }
   }
