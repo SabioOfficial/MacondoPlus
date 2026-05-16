@@ -41,9 +41,11 @@
         <a href="#tools">Tools</a>
         <ul>
           <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#additional-project-info">Additional Project Info</a></li>
           <li><a href="#shop-categories">Shop Categories</a></li>
           <li><a href="#shop-goals">Shop Goals</a></li>
           <li><a href="#styling-fixes">Styling Fixes</a></li>
+          <li><a href="#shop-sort-enhanced">Shop Sort Enhanced</a></li>
         </ul>
       </li>
     </ul>
@@ -119,6 +121,10 @@ This is one of the three categories a module can be. This category is for module
 
 Adds achievements.
 
+#### Additional Project Info
+
+Adds additional project metadata that the API exposes.
+
 #### Shop Categories
 
 Adds categories for shop items and a filter to narrow your search.
@@ -130,6 +136,10 @@ Adds shop goals to the Shop.
 #### Styling Fixes
 
 Fixes minor styling issues for Macondo that pisses you off.
+
+#### Shop Sort Enhanced
+
+Adds extra sort options to the shop: A>Z, Z>A, etc.
 
 ## Installation
 
