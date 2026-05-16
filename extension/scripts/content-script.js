@@ -17,6 +17,7 @@
     {id: "macondoplus-panel", name: "Macondo+ Panel", description: "Core module providing the shared panel UI.", category: "Core", defaultEnabled: true, coreModule: true},
     {id: "achievements", name: "Achievements", description: "Adds achievements.", category: "Tools", defaultEnabled: true},
     {id: "shop-sort-enhanced", name: "Shop Sort Enhanced", description: "Adds extra sort options to the shop: A>Z, Z>A, etc.", category: "Tools", defaultEnabled: true},
+    {id: "additional-project-info", name: "Additional Project Info", description: "Adds additional project metadata that the API exposes.", category: "Tools", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
