@@ -74,7 +74,8 @@ function parseShopItems() {
 }
 
 function isShopVisible() {
-  return document.querySelector("[data-flip-id] button.ds-btn-primary") !== null && document.querySelector("[data-flip-id] button.ds-btn-primary")?.textContent.includes("Gold");
+  const btn = document.querySelector("[data-flip-id] button.ds-btn-primary");
+  return btn !== null && btn.textContent.includes("Gold");
 }
 
 function buildWidget() {
