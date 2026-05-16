@@ -4,6 +4,7 @@
 <div align="center">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/SabioOfficial/MacondoPlus?style=for-the-badge">
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/SabioOfficial/MacondoPlus?style=for-the-badge">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/SabioOfficial/MacondoPlus/firefox-validator.yml?style=for-the-badge&label=Firefox%20Support">
 </div>
 <br>
 <div align="center">
