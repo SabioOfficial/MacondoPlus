@@ -216,7 +216,6 @@
   }
 
   function buildPanel() {
-    if (!window.MacondoPlus?.newPanel) return null;
     const {open: openPanel, close, content} = window.MacondoPlus.newPanel();
 
     function render() {
