@@ -494,7 +494,7 @@ function doRefresh(body, countSpan, globalSection) {
       pct = total > 0 ? Math.min((currentGold / total) * 100, 100) : 100;
       label = `${currentGold} / ${total} gold total`;
 
-      while (globalBar.firstChild) globalBar.removeChild(globalBar.firstChild);
+      globalBar.innerHTML = "";
 
       if (items.some(i => i.locked) && total > 0) {
         globalBar.style.cssText = `
@@ -548,7 +548,7 @@ function doRefresh(body, countSpan, globalSection) {
       pct = avg;
       const affordable = items.filter(i => currentGold >= i.gold).length;
       label = `${affordable} / ${items.length} affordable`;
-      while (globalBar.firstChild) globalBar.removeChild(globalBar.firstChild);
+      globalBar.innerHTML = "";
       globalBar.style.cssText = `
         height: 100%;
         width: ${pct.toFixed(1)}%;
@@ -565,7 +565,7 @@ function doRefresh(body, countSpan, globalSection) {
     globalPct.textContent = "";
   }
 
-  while (body.firstChild) body.removeChild(body.firstChild);
+  body.innerHTML = "";
   if (!items.length) {
     renderEmpty(body);
     return;
