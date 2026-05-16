@@ -34,7 +34,10 @@
   }
 
   function applyIntensity(root) {
-    (root || document).querySelectorAll("[title]").forEach(el => {
+    const target = root || document;
+    const els = [...target.querySelectorAll("[title]")];
+    if (target !== document && target.matches("[title]")) els.push(target);
+    els.forEach(el => {
       const title = el.getAttribute("title") || "";
       const m = title.match(/:\s*(\d+)\s*min\s+logged/i);
       if (!m) return;
@@ -95,8 +98,15 @@
   function init() {
     applyIntensity(document);
     applyLegend();
-    const observer = new MutationObserver(() => {
-      applyIntensity(document);
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) applyIntensity(node);
+        }
+        if (m.type === "attributes" && m.target.nodeType === Node.ELEMENT_NODE) {
+          applyIntensity(m.target);
+        }
+      }
       applyLegend();
     });
     observer.observe(document.body, {
