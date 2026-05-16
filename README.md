@@ -57,6 +57,34 @@
       <li><a href="#from-webstore">From Webstore</a></li>
     </ul>
   </li>
+  <li>
+    <a href="#developers-guide">Developer's Guide</a>
+    <ul>
+      <li><a href="#how-the-module-system-works">How the module system works</a></li>
+      <li>
+        <a href="#creating-a-module">Creating a module</a>
+        <ul>
+          <li><a href="#1-registering-your-module">(1) Registering your module</a></li>
+          <li><a href="#2-creating-your-module-file">(2) Creating your module file</a></li>
+          <li><a href="#3-registering-your-file-in-the-manifest">(3) Registering your file in the manifest</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#using-the-core-modules">Using the core modules</a>
+        <ul>
+          <li><a href="#using-the-built-in-panel-macondoplus-panel">Using the built-in panel (macondoplus-panel)</a></li>
+          <li><a href="#using-the-shared-styles-macondoplus-styles">Using the shared styles (macondoplus-styles)</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#additional-information--tools">Additional Information & Tools</a>
+        <ul>
+          <li><a href="#what-makes-a-core-module-special">What makes a Core module special?</a></li>
+          <li><a href="#quick-start-checklist">Quick-start Checklist</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
 
 ## Modules
@@ -95,7 +123,9 @@ Display how much time is left until your streak is logged in for the day!
 
 ### Core
 
-More developer information will be displayed for Core modules soon.
+Core modules are not features. It's the engines that make most modules work. This section is aimed at **developers** who want to build new modules for **Macondo+**.
+
+Information for how to use Core Modules as a **developer** is available in <a href="#developers-guide">this section</a> of this readme.
 
 ### Appearance
 
@@ -167,3 +197,214 @@ Go to about:addons on the URL bar. Press on the cogwheel which should be located
 |:-----------------------------------------:|:---------------:|
 | Chromium (Chrome, Arc, Brave, Edge, etc.) | [Chrome Web Store](https://chromewebstore.google.com/detail/macondo+/ldhbamehlholbmcfmihlhagjpdkmjlgo) |
 | Firefox (Firefox, Zen Browser, etc.)      | [Firefox Addons](https://addons.mozilla.org/en-US/firefox/addon/macondo/) |
+
+## Developer's Guide
+
+> You should have a basic understanding of Javascript and browser extensions before creating a module.
+
+Want to create your **very own** custom modules for **Macondo+**? Well, it's simple. Here's a guide on how **you** can get it up and running!
+
+---
+
+### How the module system works
+
+When the extension loads, it runs `content-script.js` first. That script creates a global object called `window.MacondoPlus` that every module can talk to. Think of it as a shared noticeboard that any module can read from.
+
+```
+content-script.js    -> sets up window.MacondoPlus
+     👀 ↓
+each module file     -> checks window.MacondoPlus, then does its purpose
+```
+
+The three properties `window.MacondoPlus` gives you:
+
+| Property | What it is |
+|---|---|
+| `MODULES` | The full list of every registered module (an array of objects) |
+| `isEnabled(id)` | A function. Pass a module's id, get back `true` or `false`. This is heavily used to disable the module if it is not enabled. You will likely need to use this. |
+| `setEnabled(id, value)` | A function. Turn a module on or off and save the choice. |
+
+---
+
+### Creating a module
+
+Let's create a custom module you will be making yourself. This will teach you basically everything you need. Good luck!
+
+#### (1) Registering your module
+
+Open `extension/scripts/content-script.js`. Inside the `MODULES` array near the top, add a new entry for your module:
+
+> If your module is a WIP or is a silly/troll module, please enter `false` for `defaultEnabled`.
+
+```js
+{
+  id: "my-peak-module",        // a unique --> kebab-case <-- id
+  name: "My PEAK Module",      // the grammatically accurate name shown in the module manager
+  description: "This is PEAK", // shown under the name in the manager
+  category: "QoL",             // "QoL", "Tools", or "Appearance"
+  defaultEnabled: true         // is it on by default when someone first installs a version with your module?
+}
+```
+
+##### Categories
+
+| Category | Use it when your module... |
+|---|---|
+| `"QoL"` | Makes the site easier or nicer to use |
+| `"Appearance"` | Changes how something looks |
+| `"Tools"` | Adds a brand-new tool or panel |
+| `"Core"` | Powers other modules (only for internal infrastructure; you probably don't need this)
+
+#### (2) Creating your module file
+
+Create a new file at `extension/scripts/modules/my-peak-module.js`.
+
+Every module follows the same (or similar, for older modules) three-line skeleton.
+
+```js
+(() => {
+  if (window.MacondoPlus?.isEnabled("my-peak-module")) return;
+
+  // your code goes after the if statement
+})();
+```
+
+Alternatively, this is what was used for older modules: (and some newer modules) This is not used since nesting if statements are bad programming practices.
+
+> Not recommended for general use. This is documented for archival purposes.
+
+```js
+if (window.MacondoPlus?.isEnabled("my-peak-module")) {
+  // your code goes here
+}
+```
+
+The `?.` after `MacondoPlus` is JavaScript's way of saying "only try to call `isEnabled` if `window.MacondoPlus` actually exists". It keeps things safe.
+
+##### (Example) Hiding an element
+
+> You should understand basic CSS and how to get a CSS selector for an element first.
+
+```js
+(() => {
+  if (window.MacondoPlus?.isEnabled("my-peak-module")) return;
+  const style = document.createElement("style");
+  style.textContent = `
+    .element {
+      display: none !important;
+    }
+  `;
+})();
+```
+
+##### (Example) Turning every H1 into custom text
+
+```js
+(() => {
+  if (window.MacondoPlus?.isEnabled("my-peak-module")) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    const heading = document.querySelector("h1");
+    if (heading) {
+      heading.textContent = "Hello Macondo!";
+    }
+  });
+})();
+```
+
+#### (3) Registering your file in the manifest
+
+Open `extension/manifest.json`. Find the `"js"` array inside `"content_scripts"` and add your file to the list:
+
+> ⚠️ `content-script.js` **must** always be **first** in this list. It sets up `window.MacondoPlus` before any module file runs.
+
+```json
+"js": [
+  "scripts/content-script.js",
+  ...
+  "scripts/modules/my-peak-module.js"
+]
+```
+
+**Congratulations, your module is now live!**
+
+---
+
+### Using the core modules
+
+A set of tutorials on how to use the core modules.
+
+#### Using the built-in panel (macondoplus-panel)
+
+The `macondoplus-panel` core module gives modules that need panels that look like the base website so you don't have to build it from scratch.
+
+##### (Example) Basic panel
+
+```js
+(() => {
+  if (window.MacondoPlus?.isEnabled("my-peak-module")) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    // Create a new panel
+    const {open, close, content} = window.MacondoPlus.newPanel();
+
+    // Put whatever HTML you want inside of the panel
+    content.innerHTML = `
+      <h2>My Module</h2>
+      <p>Ts peak!</p>
+    `;
+
+    // You can set it to open however you like; here, we use a button click
+    const myButton = document.querySelector(".my-trigger-button");
+    myButton.addEventListener("click", open);
+  });
+})();
+```
+
+`newPanel()` returns three things:
+
+| | What it does |
+|---|---|
+| `open()` | Shows the panel |
+| `close()` | Hides the panel |
+| `content` | The DOM Content; put your HTML inside this |
+
+#### Using the shared styles (macondoplus-styles)
+
+The `macondoplus-styles` core module injects a small set of reusable CSS animations and utility classes that all modules share. You can use these CSS classes in any HTML your module creates:
+
+| Class | What it does |
+|---|---|
+| `macondoplus-panel-open` | Fades an element in like the Macondo panel. |
+| `macondoplus-panel-close` | Fades an element out like the Macondo panel. |
+| `macondoplus-panel-open-with-scale` | Fades in *and* zooms in. |
+| `macondoplus-panel-close-with-scale` | Fades out *and* zooms out. |
+
+There are already used by the panel system internally, so you normally don't need to touch them. But if you're building a custom popup or toast notification, they're here for you to freely use.
+
+---
+
+### Additional Information & Tools
+
+#### What makes a Core module special?
+
+If you look at the module list in `content-script.js`, you'll see two modules with `coreModule: true`;
+
+```js
+{id: "macondoplus-styles", ..., coreModule: true},
+{id: "macondoplus-panel", ..., coreModule: true},
+```
+
+`coreModule: true` does two things:
+- Make sure the module is **always** enabled. `isEnabled()` returns `true` no matter what the user has modified.
+- The toggle button in the module manager UI is **disabled** so the user can't accidentally turn it off and break functionality.
+
+> ⚠️ You should **never** set `coreModule: true` on your own module. Only use it if your module provides something that other modules actively depend on to work at all.
+
+#### Quick-start Checklist
+
+When building a new module, run through this list:
+
+- [ ] Added an entry to the `MODULES` array in `content-script.js`
+- [ ] Created `extension/scripts/modules/your-id.js`
+- [ ] Used the [basic skeleton](#2-creating-your-module-file) to check for if the module is toggled on/off.
+- [ ] Added the file path to the `"js"` array in `manifest.json`
+- [ ] Reloaded the extension in your browser to test
