@@ -419,7 +419,7 @@
   const checkObs = new MutationObserver(checkAchievements);
 
   function start() {
-    checkObs.observe(document.body, {childList: true, subtree: true, characterData: true});
+    checkObs.observe(document.body, {childList: true, subtree: true});
     init();
   }
 
