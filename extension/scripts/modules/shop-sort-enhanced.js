@@ -1,5 +1,5 @@
 (() => {
-  if (!window.MacondoPlus?.isEnabled("shop-sort")) return;
+  if (!window.MacondoPlus?.isEnabled("shop-sort-enhanced")) return;
 
   function getGrid() {
     const card = document.querySelector("[data-flip-id]:not([data-flip-id^='auto-'])");
