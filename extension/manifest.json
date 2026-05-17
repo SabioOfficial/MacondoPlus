@@ -49,7 +49,7 @@
     }
   ],
   "permissions": ["storage"],
-  "host_permissions": ["https://api.github.com/*"],
+  "host_permissions": ["https://api.github.com/*", "https://clients2.google.com/*", "https://addons.mozilla.org/*"],
   "browser_specific_settings": {
     "gecko": {
       "id": "macondoplus@extension",
