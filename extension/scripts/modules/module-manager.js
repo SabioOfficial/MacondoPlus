@@ -30,7 +30,7 @@ function injectManagerButton() {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   `;
 
-  const {MODULES, isEnabled, setEnabled} = window.MacondoPlus;
+  const {MODULES, isEnabled, setEnabled, canEnable, getConflicts} = window.MacondoPlus;
 
   const initialState = {};
   MODULES.forEach(mod => {initialState[mod.id] = isEnabled(mod.id);});
@@ -47,21 +47,33 @@ function injectManagerButton() {
 
   function renderToggle(mod) {
     const on = isEnabled(mod.id);
+    const conflicted = !on && !canEnable(mod.id);
+    const disabled = !!mod.coreModule || conflicted;
+    const conflictNames = getConflicts(mod.id)
+      .filter(cid => isEnabled(cid))
+      .map(cid => MODULES.find(m => m.id === cid)?.name)
+      .join(", ")
+    const disabledTitle = mod.coreModule
+      ? "This module cannot be disabled"
+      : conflicted
+        ? `Conflicts with: ${conflictNames}`
+        : "";
     return `
       <div data-module-row="${mod.id}" style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(92,61,30,0.1);">
         <div style="flex:1;min-width:0;">
           <div style="font-size: 14px; font-weight: 700; color: var(--color-ds-brown, #5c3d1e);">${mod.name}</div>
           <div data-module-desc="${mod.id}" style="font-size: 11px; color: rgba(92,61,30,0.6); margin-top: 2px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${mod.description}</div>
+          ${conflicted ? `<div style="font-size:10px;font-weight:700;color:#b45309;margin-top:3px;">⚠ Conflicts with ${conflictNames}</div>` : ""}
         </div>
         <button
           type="button"
           data-module-id="${mod.id}"
           class="macondoplus-toggle"
-          style="flex-shrink: 0; margin-top: 2px; width: 36px; height: 20px; border-radius: 10px; border: 2px solid var(--color-ds-brown, #5c3d1e); cursor: pointer; position: relative; transition:background 0.2s;background:${on ? "var(--color-ds-brown,#5c3d1e)" : "transparent"};"
+          style="flex-shrink: 0; margin-top: 2px; width: 36px; height: 20px; border-radius: 10px; border: 2px solid var(--color-ds-brown, #5c3d1e); cursor: ${disabled ? "not-allowed" : "pointer"}; position: relative; transition:background 0.2s; opacity:${disabled && !mod.coreModule ? "0.4" : "1"}; background:${on ? "var(--color-ds-brown,#5c3d1e)" : "transparent"};"
           aria-pressed="${on}"
           aria-label="Toggle ${mod.name}"
-          ${mod.coreModule ? "disabled" : ""}
-          title="${mod.coreModule ? "This module cannot be disabled" : ""}"
+          ${disabled ? "disabled" : ""}
+          title="${disabledTitle}"
         >
           <span style="position:absolute;top:2px;left:${on ? "16px" : "2px"};width:12px;height:12px;border-radius:50%;background:${on ? "var(--color-parchment,#f5e6c8)" : "var(--color-ds-brown,#5c3d1e)"};transition:left 0.2s;"></span>
         </button>
@@ -134,6 +146,8 @@ function injectManagerButton() {
   panel.querySelectorAll(".macondoplus-toggle").forEach(toggleBtn => {
     toggleBtn.addEventListener("click", () => {
       const id = toggleBtn.dataset.moduleId;
+      if (!isEnabled(id) && !canEnable(id)) return;
+
       const nowEnabled = !isEnabled(id);
       setEnabled(id, nowEnabled);
 
@@ -142,6 +156,34 @@ function injectManagerButton() {
       const knob = toggleBtn.querySelector("span");
       knob.style.left = nowEnabled ? "16px" : "2px";
       knob.style.background = nowEnabled ? "var(--color-parchment, #f5e6c8)" : "var(--color-ds-brown, #5c3d1e)";
+
+      getConflicts(id).forEach(conflictId => {
+        const conflictRow = panel.querySelector(`[data-module-row="${conflictId}"]`);
+        const conflictBtn = panel.querySelector(`.macondoplus-toggle[data-module-id="${conflictId}"]`);
+        if (!conflictBtn) return;
+
+        const nowConflicted = !isEnabled(conflictId) && !canEnable(conflictId);
+        conflictBtn.disabled = nowConflicted;
+        conflictBtn.style.opacity = nowConflicted ? "0.4" : "1";
+        conflictBtn.style.cursor = nowConflicted ? "not-allowed" : "pointer";
+        conflictBtn.title = nowConflicted ? `Conflicts with: ${MODULES.find(m => m.id === id)?.name}` : "";
+
+        const existingWarn = conflictRow?.querySelector("[data-conflict-warn]");
+        if (nowConflicted && conflictRow && !existingWarn) {
+          const warn = document.createElement("div");
+          warn.dataset.conflictWarn = "1";
+          warn.style.cssText = `
+            font-size: 10px;
+            font-weight: 700;
+            color: #b45309;
+            margin-top: 3px;
+          `;
+          warn.textContent = `⚠️ Conflicts with ${MODULES.find(m => m.id === id)?.name}`;
+          conflictRow.querySelector("[data-module-desc]")?.after(warn);
+        } else if (!nowConflicted && existingWarn) {
+          existingWarn.remove();
+        }
+      });
 
       checkForChanges();
       updateEnabledCount();

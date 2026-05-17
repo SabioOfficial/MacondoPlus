@@ -20,8 +20,8 @@
     {id: "additional-project-info", name: "Additional Project Info", description: "Adds additional project metadata that the API exposes.", category: "Tools", defaultEnabled: true},
     {id: "deforestation", name: "Deforestation", description: "burn the earth!", category: "Silly", defaultEnabled: false},
     {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false},
-    {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false},
-    {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false}
+    {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false, conflicts: ["in-debt"]},
+    {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false, conflicts: ["rich-pretender"]},
   ];
   
   function isEnabled(id) {
@@ -36,5 +36,13 @@
     localStorage.setItem(PREFIX + id, value);
   }
 
-  window.MacondoPlus = {isEnabled, setEnabled, MODULES};
+  function getConflicts(id) {
+    return MODULES.find(m => m.id === id)?.conflicts ?? [];
+  }
+
+  function canEnable(id) {
+    return getConflicts(id).every(conflictId => !isEnabled(conflictId));
+  }
+
+  window.MacondoPlus = {isEnabled, setEnabled, canEnable, getConflicts, MODULES};
 })();
