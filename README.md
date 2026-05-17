@@ -264,7 +264,7 @@ Every module follows the same (or similar, for older modules) three-line skeleto
 
 ```js
 (() => {
-  if (window.MacondoPlus?.isEnabled("my-peak-module")) return;
+  if (!window.MacondoPlus?.isEnabled("my-peak-module")) return;
 
   // your code goes after the if statement
 })();
