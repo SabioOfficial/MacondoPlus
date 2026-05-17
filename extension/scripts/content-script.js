@@ -20,6 +20,7 @@
     {id: "additional-project-info", name: "Additional Project Info", description: "Adds additional project metadata that the API exposes.", category: "Tools", defaultEnabled: true},
     {id: "deforestation", name: "Deforestation", description: "burn the earth!", category: "Silly", defaultEnabled: false},
     {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false},
+    {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false},
   ];
   
   function isEnabled(id) {
