@@ -43,7 +43,8 @@
         "scripts/modules/additional-project-info.js",
         "scripts/modules/deforestation.js",
         "scripts/modules/traditional.js",
-        "scripts/modules/rich-pretender.js"
+        "scripts/modules/rich-pretender.js",
+        "scripts/modules/in-debt.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"

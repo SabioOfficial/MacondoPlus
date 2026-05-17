@@ -21,6 +21,7 @@
     {id: "deforestation", name: "Deforestation", description: "burn the earth!", category: "Silly", defaultEnabled: false},
     {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false},
     {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false},
+    {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false}
   ];
   
   function isEnabled(id) {
