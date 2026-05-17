@@ -17,11 +17,27 @@ function init() {
   (document.head || document.documentElement).appendChild(style);
 }
 
-const observer = new MutationObserver(() => {
-  observer.disconnect();
-  fixLockedButtons();
-  observer.observe(document.body, {childList: true, subtree: true});
-});
+function fixAvatar() {
+  const avatar = document.querySelector("div.rounded-full.overflow-hidden[class*='border-ds-brown']");
+  if (!avatar) return;
+
+  Object.assign(avatar.style, {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  });
+
+  const img = avatar.querySelector("img");
+  if (!img) return;
+
+  Object.assign(img.style, {
+    display: "block",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    margin: "0",
+  });
+}
 
 function fixLockedButtons() {
   document.querySelectorAll("button[disabled].w-full.py-3.px-4").forEach(btn => {
@@ -44,10 +60,25 @@ function fixLockedButtons() {
   });
 }
 
+const observer = new MutationObserver(() => {
+  observer.disconnect();
+  fixLockedButtons();
+  fixAvatar();
+  observer.observe(document.body, {childList: true, subtree: true});
+});
+
 if (window.MacondoPlus?.isEnabled("styling-fixes")) {
-  document.addEventListener("DOMContentLoaded", () => {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      init();
+      fixLockedButtons();
+      fixAvatar();
+      observer.observe(document.body, {childList: true, subtree: true});
+    });
+  } else {
     init();
     fixLockedButtons();
+    fixAvatar();
     observer.observe(document.body, {childList: true, subtree: true});
-  });
+  }
 }
