@@ -18,10 +18,11 @@
     {id: "shop-sort-enhanced", name: "Shop Sort Enhanced", description: "Adds extra sort options to the shop: A>Z, Z>A, etc.", category: "Tools", defaultEnabled: true},
     {id: "additional-project-info", name: "Additional Project Info", description: "Adds additional project metadata that the API exposes.", category: "Tools", defaultEnabled: true},
     {id: "deforestation", name: "Deforestation", description: "burn the earth!", category: "Silly", defaultEnabled: false},
-    {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false},
+    {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false, conflicts: ["new-project-addict"]},
     {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false, conflicts: ["in-debt"]},
     {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false, conflicts: ["rich-pretender"]},
     {id: "extra-fruity-badge", name: "Extra Fruity Badge", description: "Shows a gold star on a project if the project is Extra Fruity!", category: "Tools", defaultEnabled: true},
+    {id: "new-project-addict", name: "New Project Addict", description: "you cannot do anything except to create new projects", category: "Silly", defaultEnabled: false, conflicts: ["traditionalist"]},
   ];
   
   function isEnabled(id) {
