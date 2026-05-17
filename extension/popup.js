@@ -3,7 +3,7 @@ const ext = typeof browser !== "undefined" ? browser : chrome;
 document.getElementById("version").textContent = "v" + ext.runtime.getManifest().version;
 
 document.getElementById("btn-macondo").addEventListener("click", () => {
-  ext.tabs.create({url: "https://macondo.hackclub.com/projects/349"});
+  ext.tabs.create({url: "https://macondoplus.sabiothedev.xyz/"});
   window.close();
 });
 document.getElementById("btn-github").addEventListener("click", () => {
