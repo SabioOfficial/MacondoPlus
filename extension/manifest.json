@@ -45,7 +45,8 @@
         "scripts/modules/rich-pretender.js",
         "scripts/modules/in-debt.js",
         "scripts/modules/extra-fruity-badge.js",
-        "scripts/modules/new-project-addict.js"
+        "scripts/modules/new-project-addict.js",
+        "scripts/modules/drunk.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"

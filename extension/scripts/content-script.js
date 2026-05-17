@@ -23,6 +23,7 @@
     {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false, conflicts: ["rich-pretender"]},
     {id: "extra-fruity-badge", name: "Extra Fruity Badge", description: "Shows a gold star on a project if the project is Extra Fruity!", category: "Tools", defaultEnabled: true},
     {id: "new-project-addict", name: "New Project Addict", description: "you cannot do anything except to create new projects", category: "Silly", defaultEnabled: false, conflicts: ["traditionalist"]},
+    {id: "drunk", name: "Drunk", description: "please don't drink in these conditions! enable at your own risk.", category: "Silly", defaultEnabled: false}
   ];
   
   function isEnabled(id) {
