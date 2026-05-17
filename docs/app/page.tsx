@@ -94,6 +94,15 @@ export default function Home() {
         >
           Firefox Add-ons
         </a>
+        <a
+          href="https://github.com/SabioOfficial/MacondoPlus/"
+          target="_blank"
+          className="btn"
+          onMouseEnter={handleBtnEnter}
+          onMouseLeave={handleBtnLeave}
+        >
+          GitHub
+        </a>
         <p className="flex flex-row gap-2">
           by{" "}
           <a
