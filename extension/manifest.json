@@ -31,7 +31,6 @@
         "scripts/modules/middle-click-project.js",
         "scripts/modules/hide-idea-generator.js",
         "scripts/modules/shop-goals.js",
-        "scripts/modules/persistent-filters.js",
         "scripts/modules/streak-time-display.js",
         "scripts/modules/styling-fixes.js",
         "scripts/modules/streak-intensity.js",

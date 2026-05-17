@@ -8,7 +8,6 @@
     {id: "middle-click-project", name: "Middle Click Project", description: "Middle clicking a project tile opens it on a new tab.", category: "QoL", defaultEnabled: true},
     {id: "hide-idea-generator", name: "Hide Idea Generator", description: "Hides the slop project idea generator.", category: "QoL", defaultEnabled: true},
     {id: "shop-goals", name: "Shop Goals", description: "Adds shop goals to the Shop.", category: "Tools", defaultEnabled: true},
-    {id: "persistent-filters", name: "Persistent Filters", description: "Remembers your last used explore filters across sessions.", category: "QoL", defaultEnabled: true},
     {id: "streak-time-display", name: "Streak Time Display", description: "Display how much time is left until your streak is locked in for the day!", category: "QoL", defaultEnabled: true},
     {id: "styling-fixes", name: "Styling Fixes", description: "Fixes minor styling issues for Macondo that pisses you off.", category: "Appearance", defaultEnabled: true},
     {id: "streak-intensity", name: "Streak Intensity", description: "Adds appearance changes to the Streak Calendar: the more time you spent working on that day, the more darker and red the day gets!", category: "Appearance", defaultEnabled: true},

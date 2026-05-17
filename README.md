@@ -23,7 +23,6 @@
           <li><a href="#hide-feedback">Hide Feedback</a></li>
           <li><a href="#hide-idea-generator">Hide Idea Generator</a></li>
           <li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
-          <li><a href="#persistent-filters">Persistent Filters</a></li>
           <li><a href="#streak-time-display">Streak Time Display</a></li>
         </ul>
       </li>
@@ -113,10 +112,6 @@ Hides the slop project idea generator.
 #### Keyboard Shortcuts
 
 Adds keyboard shortcuts to Macondo. E for Shop, R for Profile, 1-9 for Projects, Esc to exit the current menu you're in, / to search for projects.
-
-#### Persistent Filters
-
-Remembers your last used explore filters across sessions.
 
 #### Streak Time Display
 
