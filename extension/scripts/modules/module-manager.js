@@ -106,7 +106,7 @@ function injectManagerButton() {
 
   function updateEnabledCount() {
     const count = MODULES.filter(m => isEnabled(m.id)).length;
-    panel.querySelector("div[style*='font-size: 11px; color: rgba(92, 61, 30, 0.45)']") && (panel.querySelector("div[style*='font-size: 11px; color: rgba(92, 61, 30, 0.45)']").textContent = `${count} of ${MODULES.length} enabled`);
+    panel.querySelector("div[style*='font-size: 11px; color: rgba(92, 61, 30, 0.45)']") && (panel.querySelector("div[style*='font-size: 11px; color: rgba(92, 61, 30, 0.45)']").textContent = `${count} modules enabled`);
   }
   
   function checkForChanges() {
