@@ -41,7 +41,8 @@
         "scripts/modules/achievements.js",
         "scripts/modules/shop-sort-enhanced.js",
         "scripts/modules/additional-project-info.js",
-        "scripts/modules/deforestation.js"
+        "scripts/modules/deforestation.js",
+        "scripts/modules/traditional.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
