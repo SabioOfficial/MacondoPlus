@@ -43,7 +43,8 @@
         "scripts/modules/deforestation.js",
         "scripts/modules/traditional.js",
         "scripts/modules/rich-pretender.js",
-        "scripts/modules/in-debt.js"
+        "scripts/modules/in-debt.js",
+        "scripts/modules/extra-fruity-badge.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"

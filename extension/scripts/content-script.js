@@ -21,6 +21,7 @@
     {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false},
     {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false, conflicts: ["in-debt"]},
     {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false, conflicts: ["rich-pretender"]},
+    {id: "extra-fruity-badge", name: "Extra Fruity Badge", description: "Shows a gold star on a project if the project is Extra Fruity!", category: "Tools", defaultEnabled: true},
   ];
   
   function isEnabled(id) {
