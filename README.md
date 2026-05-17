@@ -194,10 +194,10 @@ Go to about:addons on the URL bar. Press on the cogwheel which should be located
 
 ### From Webstore
 
-|                **Browser**                |     **Link**    |
-|:-----------------------------------------:|:---------------:|
-| Chromium (Chrome, Arc, Brave, Edge, etc.) | [Chrome Web Store](https://chromewebstore.google.com/detail/macondo+/ldhbamehlholbmcfmihlhagjpdkmjlgo) |
-| Firefox (Firefox, Zen Browser, etc.)      | [Firefox Addons](https://addons.mozilla.org/en-US/firefox/addon/macondo/) |
+| **Browser** | **Link** | **Users** | **Version**
+|---|---|---|---|
+| Chromium | [Chrome Web Store](https://chromewebstore.google.com/detail/macondo+/ldhbamehlholbmcfmihlhagjpdkmjlgo) | ![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/ldhbamehlholbmcfmihlhagjpdkmjlgo?style=for-the-badge) | ![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/ldhbamehlholbmcfmihlhagjpdkmjlgo?style=for-the-badge)
+| Firefox | [Firefox Addons](https://addons.mozilla.org/en-US/firefox/addon/macondo/) |
 
 ## Developer's Guide
 
