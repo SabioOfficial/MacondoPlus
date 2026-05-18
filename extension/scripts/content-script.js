@@ -25,6 +25,7 @@
     {id: "new-project-addict", name: "New Project Addict", description: "you cannot do anything except to create new projects", category: "Silly", defaultEnabled: false, conflicts: ["traditionalist"]},
     {id: "drunk", name: "Drunk", description: "please don't drink in these conditions! enable at your own risk.", category: "Silly", defaultEnabled: false},
     {id: "ads-please", name: "Ads, Please", description: "Brings forth an extensive range of lucrative premium monetisation possibilities encompassing the whole of the said website.", category: "Silly", defaultEnabled: false},
+    {id: "googentitys-module", name: "Googentity's Module", description: "replaces all the text on the page with very inspirational words", category: "Silly", defaultEnabled: false},
   ];
   
   function isEnabled(id) {
