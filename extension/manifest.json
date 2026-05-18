@@ -19,6 +19,12 @@
       "128": "images/icon-128.png"
     }
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*.png", "images/*.jpg", "images/*.webp"],
+      "matches": ["https://macondo.hackclub.com/*"]
+    }
+  ],
   "content_scripts": [
     {
       "js": [
@@ -46,7 +52,8 @@
         "scripts/modules/in-debt.js",
         "scripts/modules/extra-fruity-badge.js",
         "scripts/modules/new-project-addict.js",
-        "scripts/modules/drunk.js"
+        "scripts/modules/drunk.js",
+        "scripts/modules/ads-please.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
