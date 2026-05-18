@@ -19,13 +19,13 @@
     {id: "additional-project-info", name: "Additional Project Info", description: "Adds additional project metadata that the API exposes.", category: "Tools", defaultEnabled: true},
     {id: "deforestation", name: "Deforestation", description: "burn the earth!", category: "Silly", defaultEnabled: false},
     {id: "traditionalist", name: "Traditionalist", description: "disable the ability to create new projects", category: "Silly", defaultEnabled: false, conflicts: ["new-project-addict"]},
-    {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false, conflicts: ["in-debt"]},
-    {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false, conflicts: ["rich-pretender"]},
+    {id: "rich-pretender", name: "Rich Pretender", description: "pretend to be rich", category: "Silly", defaultEnabled: false, conflicts: ["in-debt", "googentitys-module"]},
+    {id: "in-debt", name: "In Debt", description: "free debt!", category: "Silly", defaultEnabled: false, conflicts: ["rich-pretender", "googentitys-module"]},
     {id: "extra-fruity-badge", name: "Extra Fruity Badge", description: "Shows a gold star on a project if the project is Extra Fruity!", category: "Tools", defaultEnabled: true},
     {id: "new-project-addict", name: "New Project Addict", description: "you cannot do anything except to create new projects", category: "Silly", defaultEnabled: false, conflicts: ["traditionalist"]},
     {id: "drunk", name: "Drunk", description: "please don't drive in these conditions! enable at your own risk.", category: "Silly", defaultEnabled: false},
     {id: "ads-please", name: "Ads, Please", description: "Brings forth an extensive range of lucrative premium monetisation possibilities encompassing the whole of the said website.", category: "Silly", defaultEnabled: false},
-    {id: "googentitys-module", name: "Googentity's Module", description: "replaces all the text on the page with very inspirational words", category: "Silly", defaultEnabled: false},
+    {id: "googentitys-module", name: "Googentity's Module", description: "replaces all the text on the page with very inspirational words", category: "Silly", defaultEnabled: false, conflicts: ["in-debt", "rich-pretender"]},
   ];
   
   function isEnabled(id) {
