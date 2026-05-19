@@ -1,5 +1,4 @@
 (() => {
-  const PREFIX = "macondoplus_module_";
   const MODULES = [
     {id: "better-page-titles", name: "Better Page Titles", description: "Makes the page titles useful", category: "QoL", defaultEnabled: true},
     {id: "dark-mode", name: "Dark Mode", description: "Adds dark mode to Macondo (WIP)", category: "Appearance", defaultEnabled: false},
@@ -39,13 +38,13 @@
   function isEnabled(id) {
     const mod = MODULES.find(m => m.id === id);
     if (mod?.coreModule) return true;
-    const stored = localStorage.getItem(PREFIX + id);
+    const stored = localStorage.getItem("macondoplus_module_" + id);
     if (stored !== null) return stored === "true";
     return mod ? mod.defaultEnabled : true;
   }
 
   function setEnabled(id, value) {
-    localStorage.setItem(PREFIX + id, value);
+    localStorage.setItem("macondoplus_module_" + id, value);
   }
 
   function getConflicts(id) {
