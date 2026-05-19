@@ -59,7 +59,8 @@
         "scripts/modules/retro.js",
         "scripts/modules/streak-trends.js",
         "scripts/modules/25%-redder.js",
-        "scripts/modules/25%-greener.js"
+        "scripts/modules/25%-greener.js",
+        "scripts/modules/25%-bluer.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
