@@ -5,7 +5,7 @@
     const style = document.createElement("style");
     style.textContent = `
       html {
-        filter: url(#macondoplus-25%-redder-filter);
+        filter: url(#macondoplus-more-red-filter);
       }
     `;
     document.head.appendChild(style);
