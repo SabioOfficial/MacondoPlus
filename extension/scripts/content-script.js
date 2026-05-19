@@ -33,6 +33,7 @@
     {id: "25%-redder", name: "25% Redder", description: "Heavily inspired by hit Undertale mod 'Undertale 25% Redder'. As it says, it makes Macondo 25% redder.", category: "Silly", defaultEnabled: false, conflicts: ["25%-greener", "25%-bluer"]},
     {id: "25%-greener", name: "25% Greener", description: "Heavily inspired by hit Undertale mod 'Undertale 25% Greener'. As it says, it makes Macondo 25% greener.", category: "Silly", defaultEnabled: false, conflicts: ["25%-redder", "25%-bluer"]},
     {id: "25%-bluer", name: "25% Bluer", description: "Heavily inspired by hit Undertale mod 'Undertale 25% Bluer'. As it says, it makes Macondo 25% bluer.", category: "Silly", defaultEnabled: false, conflicts: ["25%-redder", "25%-greener"]},
+    {id: "flashlight", name: "Flashlight", description: "it's so dark here...", category: "Silly", defaultEnabled: false},
   ];
   
   function isEnabled(id) {
