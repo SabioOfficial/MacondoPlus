@@ -149,6 +149,15 @@ function injectManagerButton() {
       if (!isEnabled(id) && !canEnable(id)) return;
 
       const nowEnabled = !isEnabled(id);
+
+      if (nowEnabled) {
+        const mod = MODULES.find(m => m.id === id);
+        if (mod?.dangerous) {
+          const confirmed = window.confirm(`⚠️ Warning: "${mod.name}"\n------------------------\nEnabling this module could potentially break your website and may require advanced methods to reset. If you have issues, you should ask how to resolve the issues in #macondo-plus on Slack. Proceed?`);
+          if (!confirmed) return;
+        }
+      }
+
       setEnabled(id, nowEnabled);
 
       toggleBtn.style.background = nowEnabled ? "var(--color-ds-brown, #5c3d1e" : "transparent";
