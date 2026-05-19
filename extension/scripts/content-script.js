@@ -27,6 +27,7 @@
     {id: "ads-please", name: "Ads, Please", description: "Brings forth an extensive range of lucrative premium monetisation possibilities encompassing the whole of the said website.", category: "Silly", defaultEnabled: false},
     {id: "googentitys-module", name: "Googentity's Module", description: "replaces all the text on the page with very inspirational words", category: "Silly", defaultEnabled: false, conflicts: ["in-debt", "rich-pretender"]},
     {id: "gambling", name: "Gambling", description: "10% chance of deleting a div.", category: "Silly", defaultEnabled: false},
+    {id: "retro", name: "𝖱𝖾𝗍𝗋𝗈", description: "*𝖽𝗂𝗌𝖺𝖻𝗅𝖾𝗌 𝗒𝗈𝗎𝗋 𝖼𝗌𝗌*", category: "Silly", defaultEnabled: false},
   ];
   
   function isEnabled(id) {

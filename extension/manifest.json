@@ -55,7 +55,8 @@
         "scripts/modules/drunk.js",
         "scripts/modules/ads-please.js",
         "scripts/modules/googentitys-module.js",
-        "scripts/modules/gambling.js"
+        "scripts/modules/gambling.js",
+        "scripts/modules/retro.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
