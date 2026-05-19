@@ -30,6 +30,7 @@
     {id: "retro", name: "𝖱𝖾𝗍𝗋𝗈", description: "*𝖽𝗂𝗌𝖺𝖻𝗅𝖾𝗌 𝗒𝗈𝗎𝗋 𝖼𝗌𝗌*", category: "Silly", defaultEnabled: false, dangerous: true},
     {id: "module-manager", name: "Module Manager", description: "The UI to manage modules!", category: "Core", defaultEnabled: true, coreModule: true},
     {id: "streak-trends", name: "Streak Trends", description: "Analyzes your streak calendar and shows trends.", category: "Tools", defaultEnabled: true},
+    {id: "25%-redder", name: "25% Redder", description: "Heavily inspired by hit Undertale mod 'Undertale 25% Redder'. As it says, it makes Macondo 25% redder.", category: "Silly", defaultEnabled: false},
   ];
   
   function isEnabled(id) {

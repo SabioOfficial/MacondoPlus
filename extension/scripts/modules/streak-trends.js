@@ -42,7 +42,7 @@
       <polyline points="${pts.join(" ")}" fill="none" stroke="rgb(245,101,24)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
       ${dots}
     `;
-  }
+  } 
 
   function computeTrend(days) {
     if (days.length < 4) return 0;

@@ -57,7 +57,8 @@
         "scripts/modules/googentitys-module.js",
         "scripts/modules/gambling.js",
         "scripts/modules/retro.js",
-        "scripts/modules/streak-trends.js"
+        "scripts/modules/streak-trends.js",
+        "scripts/modules/25%-redder.js"
       ],
       "matches": [
         "https://macondo.hackclub.com/*"
