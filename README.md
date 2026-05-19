@@ -42,10 +42,31 @@
         <ul>
           <li><a href="#achievements">Achievements</a></li>
           <li><a href="#additional-project-info">Additional Project Info</a></li>
+          <li><a href="#extra-fruity-badge">Extra Fruity Badge</a></li>
           <li><a href="#shop-categories">Shop Categories</a></li>
           <li><a href="#shop-goals">Shop Goals</a></li>
+          <li><a href="#streak-trends">Streak Trends</a></li>
           <li><a href="#styling-fixes">Styling Fixes</a></li>
           <li><a href="#shop-sort-enhanced">Shop Sort Enhanced</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#silly">Silly</a>
+        <ul>
+          <li><a href="#deforestation">Deforestation</a></li>
+          <li><a href="#traditionalist">Traditionalist</a></li>
+          <li><a href="#rich-pretender">Rich Pretender</a></li>
+          <li><a href="#in-debt">In Debt</a></li>
+          <li><a href="#new-project-addict">New Project Addict</a></li>
+          <li><a href="#drunk">Drunk</a></li>
+          <li><a href="#ads-please">Ads, Please</a></li>
+          <li><a href="#googentitys-module">Googentity's Module</a></li>
+          <li><a href="#gambling">Gambling</a></li>
+          <li><a href="#retro">𝖱𝖾𝗍𝗋𝗈</a></li>
+          <li><a href="#25%-redder">25% Redder</a></li>
+          <li><a href="#25%-greener">25% Greener</a></li>
+          <li><a href="#25%-bluer">25% Bluer</a></li>
+          <li><a href="#flashlight">Flashlight</a></li>
         </ul>
       </li>
     </ul>
@@ -151,6 +172,10 @@ Adds achievements.
 
 Adds additional project metadata that the API exposes.
 
+#### Extra Fruity Badge
+
+Shows a gold star on a project if the project is Extra Fruity!
+
 #### Shop Categories
 
 Adds categories for shop items and a filter to narrow your search.
@@ -159,6 +184,10 @@ Adds categories for shop items and a filter to narrow your search.
 
 Adds shop goals to the Shop.
 
+#### Streak Trends
+
+Analyzes your streak calendar and shows trends.
+
 #### Styling Fixes
 
 Fixes minor styling issues for Macondo that pisses you off.
@@ -166,6 +195,66 @@ Fixes minor styling issues for Macondo that pisses you off.
 #### Shop Sort Enhanced
 
 Adds extra sort options to the shop: A>Z, Z>A, etc.
+
+### Silly
+
+This is one of the five categories a module can be. This category is for modules that are silly and do not help to improve the website in any way shape or form. Usually, it's to actually hinder the website.
+
+#### 25% Bluer
+
+Heavily inspired by hit Undertale mod 'Undertale 25% Bluer'. As it says, it makes Macondo 25% bluer.
+
+#### 25% Greener
+
+Heavily inspired by hit Undertale mod 'Undertale 25% Greener'. As it says, it makes Macondo 25% greener.
+
+#### 25% Redder
+
+Heavily inspired by hit Undertale mod 'Undertale 25% Redder'. As it says, it makes Macondo 25% redder.
+
+#### Ads, Please
+
+Brings forth an extensive range of lucrative premium monetisation possibilities encompassing the whole of the said website.
+
+#### Deforestation
+
+burn the earth!
+
+#### Drunk
+
+please don't drive in these conditions! enable at your own risk.
+
+#### Flashlight
+
+it's so dark here...
+
+#### Gambling
+
+10% chance of deleting a div.
+
+#### Googentity's Module
+
+replaces all the text on the page with very inspirational words
+
+#### In Debt
+
+free debt!
+
+#### New Project Addict
+
+you cannot do anything except to create new projects
+
+#### 𝖱𝖾𝗍𝗋𝗈
+
+*𝖽𝗂𝗌𝖺𝖻𝗅𝖾𝗌 𝗒𝗈𝗎𝗋 𝖼𝗌𝗌*
+
+#### Rich Pretender
+
+pretend to be rich
+
+#### Traditionalist
+
+disable the ability to create new projects
 
 ## Installation
 
